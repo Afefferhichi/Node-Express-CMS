@@ -11,7 +11,8 @@ const saltRounds = 10;
 
 // Check JWT TOKEN
 function auth(req, res, next) {
-    next(); return;
+    next();
+    return;
     const token = req.header('token');
     if (!token) return res.status(401).send('Access Denied');
 
@@ -205,7 +206,6 @@ const addUser = (req, res) => {
 };
 
 const allUsers = (req, res) => {
-    console.log('allUsers');
     User.find()
         .then(users => {
             res.json(users)
