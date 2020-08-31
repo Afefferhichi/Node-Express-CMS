@@ -24,7 +24,7 @@ const bootstrap = () => {
 //Connect to DB
     mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true },
         () => console.log('Connected to DB')
-    );
+    )
 
 
     app.listen(port, function() {

@@ -87,7 +87,7 @@ const register = async (req, res) => {
                                     })
                                 } else {
                                     res.json({
-                                        user: user,
+                                        user: savedUser,
                                         success: 'Congrats your registration has been approved !'
                                     })
                                 }
@@ -238,6 +238,24 @@ const deleteUser = (req, res) => {
         .catch(err => res.status(400).json({err: err}));
 };
 
+const profile =  (req, res) => {
+    if (req.headers.token) {
+        var token = req.headers.token;
+        try {
+                var decoded = jwt.decode(token);
+            
+        } catch (e) {
+            return res.status(401).send('unauthorized');
+        }
+        var data = decoded._id;
+        console.log(data)
+        // Fetch the user by id 
+        User.findById(data).then(function(user){
+            // Do something with the user
+            res.json(user);
+        });
+    }
+}
 const users_controller = {
     register,
     login,
@@ -245,7 +263,8 @@ const users_controller = {
     allUsers,
     addUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    profile
 };
 
 
