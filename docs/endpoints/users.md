@@ -1,4 +1,4 @@
-### Endpoint for Users
+### Endpoints for Users controller
 
 #### register [POST]
 - uri: '/register'  

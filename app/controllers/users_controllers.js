@@ -11,6 +11,8 @@ const saltRounds = 10;
 
 // Check JWT TOKEN
 const auth = (req, res, next)  => {
+    // We should use this for the token-authentication in future, but for now,
+    // it's skipped out due to the development's speed.
     next();
     return;
     const token = req.header('token');
