@@ -10,7 +10,7 @@ const saltRounds = 10;
 
 
 // Check JWT TOKEN
-function auth(req, res, next) {
+const auth = (req, res, next)  => {
     next();
     return;
     const token = req.header('token');
