@@ -11,8 +11,6 @@ const saltRounds = 10;
 
 // Check JWT TOKEN
 function auth(req, res, next) {
-    next();
-    return;
     const token = req.header('token');
     if (!token) return res.status(401).send('Access Denied');
 
