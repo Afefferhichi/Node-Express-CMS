@@ -10,9 +10,8 @@
         "tplcategory": "string",
         "tpldescription": "string",
         "createdAt": "date",
-        "createdBy": "admin",
         "updatedAt": "date",
-        "updatedBy": "admin"
+        
     } 
     </pre>
   
