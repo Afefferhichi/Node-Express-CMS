@@ -5,17 +5,29 @@
 - params:  
     <pre>
     {
+        tplId: 'string',
+        tplname: 'string',
+        tplcategory: 'string',
+        tpllocation: 'string',
+        tpldescription: 'string',
+        createdAt: 'date',
+        createdBy: admin,
+        updatedAt: 'date',
+        updatedBy: admin,
+
     } 
     </pre>
   
 - response:  
-    <pre>
+     <pre>
     {
+        template: savedTemplate,
+        success: 'Template added successfully !'
     }
     </pre>
 
 #### read templates
-- uri: '/templates' [GET]
+- uri: '/allTemplates' [GET]
 - params:  
     <pre>
     {
@@ -24,7 +36,7 @@
   
 - response:  
     <pre>
-    [templates array]
+    [Templates array]
     </pre>
 
 
@@ -60,27 +72,24 @@
 - uri: '/templates/:id' [DELETE]
 - params:  
     <pre>
-    {
-    } 
+    {id: 'template_id-string'}
     </pre>
-  
 - response:  
     <pre>
-    {}
+    {success: 'template deleted.'}
     </pre>
 
 
 #### delete a template
 - uri: '/templates/:id/delete' [GET]
 - params:  
-    <pre>
-    {
-    } 
+   <pre>
+    {id: 'template_id-string'}
     </pre>
   
 - response:  
-    <pre>
-    {}
+  <pre>
+    {success: 'template deleted.'}
     </pre>
 
 

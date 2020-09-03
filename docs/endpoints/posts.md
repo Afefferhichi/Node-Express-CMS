@@ -5,12 +5,17 @@
 - params:  
     <pre>
 
-        postId: 'string',
-        postTitle: 'string',
+        pstId: 'string',
+        pstOrder: 'string'
+        pstTitle: 'string',
+        pstContent:'string',
+        pstNumberOfLikes:'string',
+        pstNumberOfDislikes:'string',
+        pstRate:'string',
         createdAt: 'date',
-        createdby: user,
-        creatdAt: 'date',
-        createdby: user,
+        createdBy: user,
+        updatedAt: 'date',
+        updatedBy: user,
 
     } 
     </pre>
@@ -18,11 +23,26 @@
 - response:  
     <pre>
     {
+        post: addedPost,
+        success: 'your post must be approved by the administrator, please wait!'
     }
     </pre>
 
-#### read templates
-- uri: '/templates' [GET]
+#### read posts
+- uri: '/allPosts' [GET]
+- params:    
+``
+{} 
+``  
+- response:  
+``
+[Posts Array]
+``
+
+
+
+#### read a post
+- uri: '/posts/:id' [GET]
 - params:  
     <pre>
     {
@@ -31,63 +51,54 @@
   
 - response:  
     <pre>
-    [templates array]
+    [post object]
     </pre>
 
 
-#### read a template
-- uri: '/templates/:id' [GET]
+#### update a post
+- uri: '/posts/:id' [PUT]
 - params:  
     <pre>
-    {
-    } 
+       
+        pstTitle: 'string',
+        pstContent:'string',
+        updatedAt: 'date',
+        updatedBy: user,
+
     </pre>
   
 - response:  
     <pre>
-    [template object]
+    {
+        post: updatedPost,
+        success: 'your update must be approved by the administrator, please wait!'
+    }
     </pre>
 
 
-#### update a template
-- uri: '/templates/:id' [PUT]
+#### delete a post
+- uri: '/posts/:id' [DELETE]
 - params:  
     <pre>
-    {
-    } 
+    {id: 'post_id-string'}
     </pre>
-  
 - response:  
     <pre>
-    [template object]
-    </pre>
-
-
-#### delete a template
-- uri: '/templates/:id' [DELETE]
-- params:  
-    <pre>
-    {
-    } 
+    {success: 'post deleted.'}
     </pre>
   
-- response:  
-    <pre>
-    {}
-    </pre>
 
 
 #### delete a post
 - uri: '/posts/:id/delete' [GET]
 - params:  
-    <pre>
-    {
-    } 
+   <pre>
+    {id: 'post_id-string'}
     </pre>
   
 - response:  
-    <pre>
-    {}
+  <pre>
+    {success: 'post deleted.'}
     </pre>
 
 
