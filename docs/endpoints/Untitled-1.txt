@@ -1,0 +1,17 @@
++---------------------------------------+
+|   name    |   gender  |   birthplace  |
++---------------------------------------+
+|   Afef    |   female  |   Tunis,China |
++---------------------------------------+
+|   Aff    |   female  |   Tunis,China |
++---------------------------------------+
+
+
+Normal search
+SELECT * FROM users WHERE name = 'Aff'
+return 0
+
+Elastic search
+SELECT * FROM users WHERE name = 'Aff'
+
+return 2;
