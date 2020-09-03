@@ -5,6 +5,7 @@
 - params:  
     <pre>
     {
+<<<<<<< HEAD
         tplId: 'string',
         tplname: 'string',
         tplcategory: 'string',
@@ -14,6 +15,17 @@
         updatedAt: 'date',
         updatedBy: admin,
 
+=======
+        "tplId": "string",
+        "tplname": "string",
+        "tplcategory": "string",
+        "tpllocation": "string",
+        "tpldescription": "string",
+        "createdAt": "date",
+        "createdBy": "admin",
+        "updatedAt": "date",
+        "updatedBy": "admin"
+>>>>>>> 73b2f6cc7a5899f7f292670e27bf04821f655aa8
     } 
     </pre>
   
@@ -26,7 +38,7 @@
     </pre>
 
 #### read templates
-- uri: '/allTemplates' [GET]
+- uri: '/templates' [GET]
 - params:  
     <pre>
     {
