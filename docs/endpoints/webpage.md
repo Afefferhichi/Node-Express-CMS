@@ -10,9 +10,7 @@
         wbpFollowers:'string',
         wbpDescription: 'string',
         createdAt: 'date',
-        createdBy: user,
         updatedAt: 'date',
-        updatedBy: user,
 
     } 
     </pre>
