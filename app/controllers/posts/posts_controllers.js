@@ -1,4 +1,4 @@
-const Post = require('../models/post');
+const Post = require('../../models/post');
 
 const posts = (req, res) => {
     const condition = req.query.type === 'new' ? {type: 'new'} : {};

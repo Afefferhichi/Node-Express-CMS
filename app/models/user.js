@@ -37,7 +37,6 @@ var userSchema = new mongoose.Schema({
     photoLocation: {
         type: String
     },
-
     createdAt: {
         type: Date,
         default: Date.now
@@ -46,9 +45,6 @@ var userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-
-
-
 });
 //,{ collection: 'users' });
 
