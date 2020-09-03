@@ -1,14 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
-const validator = require("email-validator");
-const jwt = require('jsonwebtoken');
-const TOKEN_SECRET = 'UwawGKsnVz1EBbP2tHpt';
-const saltRounds = 10;
 
 
+<<<<<<< HEAD
 // Check JWT TOKEN
 const auth = (req, res, next)  => {
     // We should use this for the token-authentication in future, but for now,
@@ -258,6 +250,8 @@ const profile =  (req, res) => {
         });
     }
 }
+=======
+>>>>>>> 73b2f6cc7a5899f7f292670e27bf04821f655aa8
 const users_controller = {
     register,
     login,
