@@ -26,7 +26,7 @@
     </pre>
 
 #### read templates
-- uri: '/allTemplates' [GET]
+- uri: '/templates' [GET]
 - params:  
     <pre>
     {
