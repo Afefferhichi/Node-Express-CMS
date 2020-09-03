@@ -5,33 +5,14 @@
 - params:  
     <pre>
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        tplId: 'string',
-        tplname: 'string',
-        tplcategory: 'string',
-        tpldescription: 'string',
-        createdAt: 'date',
-        createdBy: admin,
-        updatedAt: 'date',
-        updatedBy: admin,
-
-=======
-=======
->>>>>>> 73b2f6cc7a5899f7f292670e27bf04821f655aa8
         "tplId": "string",
         "tplname": "string",
         "tplcategory": "string",
-        "tpllocation": "string",
         "tpldescription": "string",
         "createdAt": "date",
         "createdBy": "admin",
         "updatedAt": "date",
         "updatedBy": "admin"
-<<<<<<< HEAD
->>>>>>> 73b2f6cc7a5899f7f292670e27bf04821f655aa8
-=======
->>>>>>> 73b2f6cc7a5899f7f292670e27bf04821f655aa8
     } 
     </pre>
   
