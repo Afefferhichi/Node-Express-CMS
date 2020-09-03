@@ -11,6 +11,7 @@
         pstContent:'string',
         pstNumberOfLikes:'string',
         pstNumberOfDislikes:'string',
+        attachmentId: 'string',
         pstRate:'string',
         createdAt: 'date',
         createdBy: user,

@@ -8,7 +8,6 @@
         tplId: 'string',
         tplname: 'string',
         tplcategory: 'string',
-        tpllocation: 'string',
         tpldescription: 'string',
         createdAt: 'date',
         createdBy: admin,

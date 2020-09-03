@@ -13,8 +13,8 @@ const saltRounds = 10;
 const auth = (req, res, next)  => {
     // We should use this for the token-authentication in future, but for now,
     // it's skipped out due to the development's speed.
-    next();
-    return;
+    //next();
+    //return;
     const token = req.header('token');
     if (!token) return res.status(401).send('Access Denied');
 
@@ -38,25 +38,25 @@ const register = async (req, res) => {
     const organisation = req.body.organisation;
     const role = 'user';
     if (!firstname || !lastname || !email || !password || !cnfPassword || !address || !telephone || !organisation) {
-        res.json({
-            err: 'All fields are mandatory !'
+        res.status(400).json({
+            message: 'All fields are mandatory !'
         })
     } else if (validator.validate(email) === false) {
-        res.json({
-            err: 'Invalid email format !'
+        res.status(400).json({
+            message: 'Invalid email format !'
         })
     } else if (password.length < 8) {
-        res.json({
-            err: 'Password should be at least 8 character !'
+        res.status(400).json({
+           message: 'Password should be at least 8 character !'
         })
     } else if (!password === (cnfPassword)) {
-        res.json({
-            err: 'password and cnfPassword dont match !'
+        res.status(400).json({
+            message: 'password and cnfPassword dont match !'
         })
     } else {
         bcrypt.genSalt(saltRounds, function (erreur, salt) {
             if (erreur) {
-                res.json({err: erreur});
+                res.status(500).json({mrssage: erreur});
             } else {
                 bcrypt.hash(password, salt, function (error, hash) {
 
@@ -109,12 +109,12 @@ const login = (req, res) => {
     const password = req.body.password;
 
     if (!email || !password) {
-        res.json({
-            err: 'all fields are mandatory !'
+        res.status(400).json({
+            message: 'all fields are mandatory !'
         })
     } else if (validator.validate(email) === false) {
-        res.json({
-            err: 'invalid email format !'
+        res.status(400).json({
+            message: 'invalid email format !'
         })
     } else {
         User.findOne(
@@ -123,7 +123,7 @@ const login = (req, res) => {
             if (foundUser) {
                 bcrypt.compare(password, foundUser.password, function (err, isMatch) {
                     if (!isMatch) {
-                        res.json({err: "password incorrect"});
+                        res.status(400).json({message: "password incorrect"});
                     } else {
                         //create Token
                         const token = jwt.sign({_id: foundUser._id}, TOKEN_SECRET);
@@ -133,7 +133,7 @@ const login = (req, res) => {
                     }
                 });
             } else {
-                res.json({err: "User does not exist"})
+                res.status(400).json({message: "User does not exist"})
             }
         })
     }
@@ -149,16 +149,16 @@ const addUser = (req, res) => {
     const organisation = req.body.organisation;
     const role = 'user';
     if (!firstname || !lastname || !email || !password || !address || !telephone || !organisation) {
-        res.json({
-            err: 'All fields are mandatory !'
+        res.status(400).json({
+            message: 'All fields are mandatory !'
         })
     } else if (validator.validate(email) === false) {
-        res.json({
-            err: 'invalid email format !'
+        res.status(400).json({
+            message: 'invalid email format !'
         })
     } else if (password.length < 8) {
-        res.json({
-            err: 'Mot de passe doit être au moins 8 caractères !'
+        res.status(400).json({
+            message: 'Mot de passe doit être au moins 8 caractères !'
         })
     } else {
         bcrypt.genSalt(saltRounds, function (erreur, salt) {
