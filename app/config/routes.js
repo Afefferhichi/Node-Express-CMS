@@ -18,5 +18,9 @@ router.post('/updateUser/:id', auth, updateUser);
 
 // Templates part
 router.post('/templates', auth, templates.create);
+router.delete('/templates/:id', auth, templates.delete);
+router.get('/templates', auth, templates.list);
+router.get('/templates/:id', auth, templates.show);
+router.put('/templates/:id', auth, templates.update);
 
 module.exports = router;

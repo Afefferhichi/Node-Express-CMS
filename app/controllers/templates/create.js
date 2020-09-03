@@ -35,7 +35,7 @@ const create = (req, res) => {
                 }
             })
         } catch (error) {
-            res.status(400).send('Server Error: ' + error.toString());
+            res.status(400).json({error});
         }
     }
 
