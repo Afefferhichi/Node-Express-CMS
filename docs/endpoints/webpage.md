@@ -24,7 +24,7 @@
     </pre>
 
 #### read webpages
-- uri: '/allWebpages' [GET]
+- uri: '/webpages' [GET]
 - params:  
     <pre>
     {
