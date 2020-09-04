@@ -6,7 +6,6 @@
     <pre>
     {
         wbpId: 'string',
-        wbpLocation: 'string',
         wbpFollowers:'string',
         wbpDescription: 'string',
         createdAt: 'date',
