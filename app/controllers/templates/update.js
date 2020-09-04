@@ -12,7 +12,7 @@ const update = (req, res) => {
         !tpldescription
     ) {
         res.json({
-            err: 'All fields are mandatory !'
+            error: 'All fields are mandatory !'
         })
     } else {
         try {

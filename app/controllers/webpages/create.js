@@ -1,35 +1,35 @@
-const Template = require('../../models/template');
+const Webpage = require('../../models/webpage');
 
 const create = (req, res) => {
     const {
-        tplname,
-        tplcategory,
-        tpldescription,
+        wbpLocation,
+        wbpFollowers,
+        wbpDescription,
     } = req.body;
-    const tplId = (+new Date()).toString();
+    const wbpId = (+new Date()).toString();
     if (
-        !tplId ||
-        !tplname ||
-        !tplcategory ||
-        !tpldescription
+        !wbpId ||
+        !wbpLocation ||
+        !wbpFollowers ||
+        !wbpDescription
     ) {
         res.json({
             error: 'All fields are mandatory !'
         })
     } else {
-        const template = new Template({
-            tplId,
-            tplname,
-            tplcategory,
-            tpldescription
+        const webpage = new Webpage({
+            wbpId,
+            wbpLocation,
+            wbpFollowers,
+            wbpDescription
         });
         try {
-            template.save((error, createdTemplate) => {
+            webpage.save((error, createdWebpage) => {
                 if (error) {
                     res.json({error})
                 } else {
                     res.json({
-                        createdTemplate,
+                        createdWebpage,
                         success: true
                     })
                 }
