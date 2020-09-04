@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const templateSchema = new mongoose.Schema({
-    tplId: {
-        type: String,
-        required: true
-    },
     tplname: {
         type: String,
         required: true
