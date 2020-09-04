@@ -6,9 +6,7 @@ const create = (req, res) => {
         tplcategory,
         tpldescription,
     } = req.body;
-    const tplId = (+new Date()).toString();
     if (
-        !tplId ||
         !tplname ||
         !tplcategory ||
         !tpldescription
@@ -18,7 +16,6 @@ const create = (req, res) => {
         })
     } else {
         const template = new Template({
-            tplId,
             tplname,
             tplcategory,
             tpldescription

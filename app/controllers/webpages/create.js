@@ -5,9 +5,7 @@ const create = (req, res) => {
         wbpFollowers,
         wbpDescription,
     } = req.body;
-    const wbpId = (+new Date()).toString();
     if (
-        !wbpId ||
         !wbpFollowers ||
         !wbpDescription
     ) {
@@ -16,7 +14,6 @@ const create = (req, res) => {
         })
     } else {
         const webpage = new Webpage({
-            wbpId,
             wbpFollowers,
             wbpDescription
         });

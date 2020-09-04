@@ -21,6 +21,14 @@ const webpageSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    createdBy: {
+        type: String,
+        required: true
+    },
+    updatedBy: {
+        type: String,
+        required: true
+    },
 });
 //,{ collection: 'webpages' });
 
