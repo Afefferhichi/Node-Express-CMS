@@ -7,6 +7,7 @@ const {auth, allUsers, addUser, deleteUser, login, profile, register, updateUser
 const templates = require('../controllers/templates')
 const webpages = require('../controllers/webpages')
 const posts = require('../controllers/posts')
+const comments = require('../controllers/comments')
 
 // Users part
 router.get('/allUsers', auth, allUsers);
@@ -38,5 +39,12 @@ router.delete('/posts/:id', auth, posts.delete);
 router.get('/posts', auth, posts.list);
 router.get('/posts/:id', auth, posts.show);
 router.put('/posts/:id', auth, posts.update);
+
+// Comments part
+router.post('/comments', auth, comments.create);
+router.delete('/comments/:id', auth, comments.delete);
+router.get('/comments', auth, comments.list);
+router.get('/comments/:id', auth, comments.show);
+router.put('/comments/:id', auth, comments.update);
 
 module.exports = router;

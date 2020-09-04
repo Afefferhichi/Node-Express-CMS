@@ -5,15 +5,14 @@
 - params:  
     <pre>
     {
-        cmtValue:'string',
-        cmtHelpfulCounts:'string',
-        cmtUnhelpfulCounts:'string',
-        cmtFlagCounts:'string',
-        createdAt: 'date',
-        createdBy: user,
-        updatedAt: 'date',
-        updatedBy: user,
-
+        "cmtValue": "string",
+        "cmtHelpfulCounts": "string",
+        "cmtUnhelpfulCounts": "string",
+        "cmtFlagCounts": "string",
+        "createdAt": "date",
+        "createdBy": "se",
+        "updatedAt": "date",
+        "updatedBy": "se",
     } 
     </pre>
   
