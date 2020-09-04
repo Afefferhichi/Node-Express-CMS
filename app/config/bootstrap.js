@@ -22,7 +22,7 @@ const bootstrap = () => {
     app.use('/api/v1', apiRouter);
 
 //Connect to DB
-    mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true },
+    mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
         () => console.log('Connected to DB')
     )
 

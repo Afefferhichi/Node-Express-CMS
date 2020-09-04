@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const webpageSchema = new mongoose.Schema({
-    wbpId: {
-        type: String,
-        required: true
-    },
     wbpFollowers: {
         type: String,
         required: true

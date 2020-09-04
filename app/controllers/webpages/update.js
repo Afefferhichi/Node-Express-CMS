@@ -4,27 +4,30 @@ const update = (req, res) => {
     const {
         wbpFollowers,
         wbpDescription,
+        createdBy,
+        updatedBy,
     } = req.body;
     if (
         !wbpFollowers ||
-        !wbpDescription
+        !wbpDescription ||
+        !createdBy ||
+        !updatedBy
     ) {
         res.json({
             error: 'All fields are mandatory !'
         })
     } else {
         try {
-            Webpage.findById(req.params.id)
-                .then(webpage => {
-                    webpage.wbpFollowers = wbpFollowers;
-                    webpage.wbpDescription = wbpDescription;
-                    webpage.save()
-                        .then(() => res.json({success: true, updatedWebpage: webpage}));
-                })
-                .catch(err => res.status(400).json({err: err}));
-
+            Webpage.findByIdAndUpdate(req.params.id, {
+                wbpFollowers,
+                wbpDescription,
+                createdBy,
+                updatedBy
+            })
+                .then((webpage) => res.json({success: webpage !== null, updatedWebpage: webpage}))
+                .catch(error => res.status(400).json({success: false, error}));
         } catch (error) {
-            res.status(400).json({error});
+            res.status(400).json({success: false, error});
         }
     }
 

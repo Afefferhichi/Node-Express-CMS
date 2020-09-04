@@ -5,7 +5,10 @@ const list = (req, res) => {
         const condition = req.query;
         Webpage.find(condition)
             .then(webpages => {
-                res.json(webpages)
+                res.json({
+                    success: true,
+                    webpages
+                })
             })
             .catch(error => {
                 res.json({error})
@@ -20,7 +23,10 @@ const show = (req, res) => {
     try {
         Webpage.findById(req.params.id)
             .then(webpage => {
-                res.json(webpage)
+                res.json({
+                    success: true,
+                    webpage
+                })
             })
             .catch(error => {
                 res.json({error})

@@ -4,10 +4,14 @@ const create = (req, res) => {
     const {
         wbpFollowers,
         wbpDescription,
+        createdBy,
+        updatedBy
     } = req.body;
     if (
         !wbpFollowers ||
-        !wbpDescription
+        !wbpDescription ||
+        !createdBy ||
+        !updatedBy
     ) {
         res.json({
             error: 'All fields are mandatory !'
@@ -15,7 +19,9 @@ const create = (req, res) => {
     } else {
         const webpage = new Webpage({
             wbpFollowers,
-            wbpDescription
+            wbpDescription,
+            createdBy,
+            updatedBy
         });
         try {
             webpage.save((error, createdWebpage) => {
