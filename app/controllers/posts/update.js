@@ -36,7 +36,7 @@ const update = (req, res) => {
                 pstNumberOfDislikes,
                 attachmentIds,
                 pstRate,
-                updatedAt: Date.new,
+                updatedAt: new Date(),
                 createdBy,
                 updatedBy
             })

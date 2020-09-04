@@ -1,5 +1,4 @@
 const Template = require('../../models/template');
-
 const update = (req, res) => {
     const {
         tplname,
@@ -16,21 +15,18 @@ const update = (req, res) => {
         })
     } else {
         try {
-            Template.findById(req.params.id)
-                .then(template => {
-                    template.tplname = tplname;
-                    template.tplcategory = tplcategory;
-                    template.tpldescription = tpldescription;
-                    template.save()
-                        .then(() => res.json({success: true, updatedTemplate: template}));
-                })
-                .catch(err => res.status(400).json({err: err}));
+            Template.findByIdAndUpdate(req.params.id, {
+                tplname,
+                tplcategory,
+                tpldescription,
+                updatedAt: new Date()
+            })
+                .then(template => res.json({success: template !== null}))
+                .catch(error => res.status(400).json({error}));
 
         } catch (error) {
             res.status(400).json({error});
         }
     }
-
 };
-
 module.exports = update;

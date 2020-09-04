@@ -22,9 +22,10 @@ const update = (req, res) => {
                 wbpFollowers,
                 wbpDescription,
                 createdBy,
-                updatedBy
+                updatedBy,
+                updatedAt: new Date()
             })
-                .then((webpage) => res.json({success: webpage !== null, updatedWebpage: webpage}))
+                .then(webpage => res.json({success: webpage !== null}))
                 .catch(error => res.status(400).json({success: false, error}));
         } catch (error) {
             res.status(400).json({success: false, error});
