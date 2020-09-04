@@ -6,6 +6,7 @@ const {auth, allUsers, addUser, deleteUser, login, profile, register, updateUser
 
 const templates = require('../controllers/templates')
 const webpages = require('../controllers/webpages')
+const posts = require('../controllers/posts')
 
 // Users part
 router.get('/allUsers', auth, allUsers);
@@ -30,5 +31,12 @@ router.delete('/webpages/:id', auth, webpages.delete);
 router.get('/webpages', auth, webpages.list);
 router.get('/webpages/:id', auth, webpages.show);
 router.put('/webpages/:id', auth, webpages.update);
+
+// Posts part
+router.post('/posts', auth, posts.create);
+router.delete('/posts/:id', auth, posts.delete);
+router.get('/posts', auth, posts.list);
+router.get('/posts/:id', auth, posts.show);
+router.put('/posts/:id', auth, posts.update);
 
 module.exports = router;
