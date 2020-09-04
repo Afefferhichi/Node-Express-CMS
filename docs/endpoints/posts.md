@@ -5,18 +5,19 @@
 - params:  
     <pre>
 
-        pstId: 'string',
-        pstOrder: 'string'
-        pstTitle: 'string',
-        pstContent:'string',
-        pstNumberOfLikes:'string',
-        pstNumberOfDislikes:'string',
-        attachmentId: 'string',
-        pstRate:'string',
-        createdAt: 'date',
-        createdBy: user,
-        updatedAt: 'date',
-        updatedBy: user,
+        
+        "pstOrder": "string"
+        "pstTitle": "string",
+        "pstContent":"string",
+        "pstNumberOfLikes":"string",
+        "pstNumberOfDislikes":"string",
+        "attachmentIds": "string",
+        "pstRate":"string",
+        "createdAt": "date",
+        "createdBy":"user"
+        "updatedAt": "date",
+        "createdBy": "user",
+        "updatedBy": "user"
 
     } 
     </pre>

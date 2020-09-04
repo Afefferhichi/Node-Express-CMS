@@ -10,7 +10,8 @@
         wbpDescription: 'string',
         createdAt: 'date',
         updatedAt: 'date',
-
+        createdBy: 'user'
+        updatedBy: 'user'
     } 
     </pre>
   
