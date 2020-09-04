@@ -5,10 +5,6 @@ const webpageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    wbpLocation: {
-        type: String,
-        required: true
-    },
     wbpFollowers: {
         type: String,
         required: true

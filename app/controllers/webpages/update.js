@@ -2,12 +2,10 @@ const Webpage = require('../../models/webpage');
 
 const update = (req, res) => {
     const {
-        wbpLocation,
         wbpFollowers,
         wbpDescription,
     } = req.body;
     if (
-        !wbpLocation ||
         !wbpFollowers ||
         !wbpDescription
     ) {
@@ -18,7 +16,6 @@ const update = (req, res) => {
         try {
             Webpage.findById(req.params.id)
                 .then(webpage => {
-                    webpage.wbpLocation = wbpLocation;
                     webpage.wbpFollowers = wbpFollowers;
                     webpage.wbpDescription = wbpDescription;
                     webpage.save()

@@ -2,14 +2,12 @@ const Webpage = require('../../models/webpage');
 
 const create = (req, res) => {
     const {
-        wbpLocation,
         wbpFollowers,
         wbpDescription,
     } = req.body;
     const wbpId = (+new Date()).toString();
     if (
         !wbpId ||
-        !wbpLocation ||
         !wbpFollowers ||
         !wbpDescription
     ) {
@@ -19,7 +17,6 @@ const create = (req, res) => {
     } else {
         const webpage = new Webpage({
             wbpId,
-            wbpLocation,
             wbpFollowers,
             wbpDescription
         });
