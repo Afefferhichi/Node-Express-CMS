@@ -4,8 +4,7 @@
 - uri: '/comments' [POST]
 - params:  
     <pre>
-
-        cmtId: 'string',
+    {
         cmtValue:'string',
         cmtHelpfulCounts:'string',
         cmtUnhelpfulCounts:'string',

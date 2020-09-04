@@ -5,7 +5,6 @@
 - params:  
     <pre>
     {
-        wbpId: 'string',
         wbpFollowers:'string',
         wbpDescription: 'string',
         createdAt: 'date',

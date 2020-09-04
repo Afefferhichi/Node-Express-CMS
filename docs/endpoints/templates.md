@@ -5,7 +5,6 @@
 - params:  
     <pre>
     {
-        "tplId": "string",
         "tplname": "string",
         "tplcategory": "string",
         "tpldescription": "string",
