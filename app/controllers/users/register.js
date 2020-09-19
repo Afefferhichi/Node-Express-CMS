@@ -14,25 +14,25 @@ const register = async (req, res) => {
     const organisation = req.body.organisation;
     const role = 'user';
     if (!firstname || !lastname || !email || !password || !cnfPassword || !address || !telephone || !organisation) {
-        res.json({
-            err: 'All fields are mandatory !'
+        res.status(400).json({
+            message: 'All fields are mandatory !'
         })
     } else if (validator.validate(email) === false) {
-        res.json({
-            err: 'Invalid email format !'
+        res.status(400).json({
+            message: 'Invalid email format !'
         })
     } else if (password.length < 8) {
-        res.json({
-            err: 'Password should be at least 8 character !'
+        res.status(400).json({
+            message: 'Password should be at least 8 character !'
         })
-    } else if (!password === (cnfPassword)) {
-        res.json({
-            err: 'password and cnfPassword dont match !'
+    } else if (password !== cnfPassword) {
+        res.status(400).json({
+            message: 'password and cnfPassword dont match !'
         })
     } else {
         bcrypt.genSalt(saltRounds, function (erreur, salt) {
             if (erreur) {
-                res.json({err: erreur});
+                res.status(500).json({message: erreur});
             } else {
                 bcrypt.hash(password, salt, function (error, hash) {
 

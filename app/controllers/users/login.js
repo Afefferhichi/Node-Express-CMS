@@ -5,12 +5,12 @@ const login = (req, res) => {
     const password = req.body.password;
 
     if (!email || !password) {
-        res.json({
-            err: 'all fields are mandatory !'
+        res.status(400).json({
+            message: 'all fields are mandatory !'
         })
     } else if (validator.validate(email) === false) {
-        res.json({
-            err: 'invalid email format !'
+        res.status(400).json({
+            message: 'invalid email format !'
         })
     } else {
         User.findOne(
@@ -19,7 +19,7 @@ const login = (req, res) => {
             if (foundUser) {
                 bcrypt.compare(password, foundUser.password, function (err, isMatch) {
                     if (!isMatch) {
-                        res.json({err: "password incorrect"});
+                        res.status(400).json({message: "password incorrect"});
                     } else {
                         //create Token
                         const token = jwt.sign({_id: foundUser._id}, TOKEN_SECRET);
@@ -29,7 +29,7 @@ const login = (req, res) => {
                     }
                 });
             } else {
-                res.json({err: "User does not exist"})
+                res.status(404).json({message: "User does not exist"})
             }
         })
     }

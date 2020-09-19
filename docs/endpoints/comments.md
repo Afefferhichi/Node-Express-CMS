@@ -10,9 +10,9 @@
         "cmtUnhelpfulCounts": "string",
         "cmtFlagCounts": "string",
         "createdAt": "date",
-        "createdBy": "se",
+        "createdBy": "user",
         "updatedAt": "date",
-        "updatedBy": "se",
+        "updatedBy": "user",
     } 
     </pre>
   
