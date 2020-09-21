@@ -10,16 +10,16 @@ const addUser = (req, res) => {
     const organisation = req.body.organisation;
     const role = 'user';
     if (!firstname || !lastname || !email || !password || !address || !telephone || !organisation) {
-        res.json({
-            err: 'All fields are mandatory !'
+        res.status(400).json({
+            message: 'All fields are mandatory !'
         })
     } else if (validator.validate(email) === false) {
-        res.json({
-            err: 'invalid email format !'
+        res.status(400).json({
+            message: 'Invalid email format !'
         })
     } else if (password.length < 8) {
-        res.json({
-            err: 'Mot de passe doit être au moins 8 caractères !'
+        res.status(400).json({
+            message: 'Password should be at least 8 character !'
         })
     } else {
         bcrypt.genSalt(saltRounds, function (erreur, salt) {
@@ -44,14 +44,14 @@ const addUser = (req, res) => {
                         dataArray.push(foundData);
                         console.log(dataArray);
                         if (foundData.length > 0) {
-                            res.json({
-                                err: 'this account with email: ' + email + ' exist'
+                            res.status(400).json({
+                                message: 'this account with email: ' + email + ' exist'
                             })
                         } else {
                             user.save(function (err, savedUser) {
                                 if (err) {
-                                    res.json({
-                                        err: err
+                                    res.status(500).json({
+                                        message: err
                                     })
                                 } else {
                                     res.json({

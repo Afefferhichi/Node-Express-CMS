@@ -5,7 +5,7 @@ const allUsers = (req, res) => {
             res.json(users)
         })
         .catch(reason => {
-            res.json({err: reason})
+            res.status(500).json({message: reason})
         });
 };
 
