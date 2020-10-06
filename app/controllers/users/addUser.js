@@ -1,6 +1,7 @@
 const User = require('../../models/user');
 const validator = require("email-validator");
 const bcrypt = require('bcrypt');
+const saltRounds = Number(process.env.SALT_ROUNDS);
 
 const addUser = (req, res) => {
     const firstname = req.body.firstname;

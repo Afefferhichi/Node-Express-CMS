@@ -1,7 +1,7 @@
 const User = require('../../models/user');
 const bcrypt = require('bcrypt');
 const validator = require("email-validator");
-const saltRounds = 10;
+const saltRounds = Number(process.env.SALT_ROUNDS);
 
 const register = async (req, res) => {
     const firstname = req.body.firstname;
