@@ -13,15 +13,8 @@ const create = (req, res) => {
         updatedBy
     } = req.body;
     if (
-        !pstOrder ||
         !pstTitle ||
-        !pstContent ||
-        !pstNumberOfLikes ||
-        !pstNumberOfDislikes ||
-        !attachmentIds ||
-        !pstRate ||
-        !createdBy ||
-        !updatedBy
+        !pstContent
     ) {
         res.json({
             error: 'All fields are mandatory !'
