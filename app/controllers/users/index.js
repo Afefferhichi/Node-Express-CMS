@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const TOKEN_SECRET = 'UwawGKsnVz1EBbP2tHpt';
 
 const allUsers = require('./allUsers');
 const addUser = require('./addUser');
@@ -11,6 +10,7 @@ const updateUser = require('./updateUser');
 
 
 const auth = (req, res, next) => {
+    const TOKEN_SECRET = process.env.TOKEN_SECRET;
     // We should use this for the token-authentication in future, but for now,
     // it's skipped out due to the development's speed.
     next();
@@ -35,5 +35,5 @@ module.exports = {
     login,
     profile,
     register,
-    updateUser
+    updateUser,
 };

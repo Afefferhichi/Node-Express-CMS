@@ -1,4 +1,6 @@
 const User = require('../../models/user');
+const validator = require("email-validator");
+const bcrypt = require('bcrypt');
 
 const addUser = (req, res) => {
     const firstname = req.body.firstname;

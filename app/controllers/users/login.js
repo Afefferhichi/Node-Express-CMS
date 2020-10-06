@@ -1,4 +1,8 @@
 const User = require('../../models/user');
+const validator = require("email-validator");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 const login = (req, res) => {
     const email = req.body.email;
@@ -23,7 +27,7 @@ const login = (req, res) => {
                     } else {
                         //create Token
                         const token = jwt.sign({_id: foundUser._id}, TOKEN_SECRET);
-                        //res.header('token', token).send(token);
+                        // res.header('token', token).send(token);
                         res.json({user: foundUser, token: token});
                         console.log(foundUser);
                     }
