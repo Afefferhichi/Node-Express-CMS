@@ -4,6 +4,7 @@ const list = (req, res) => {
     try {
         const condition = req.query;
         Post.find(condition)
+            .populate('comments', 'cmtValue _id')
             .then(posts => {
                 res.json({
                     success: true,
@@ -11,10 +12,10 @@ const list = (req, res) => {
                 })
             })
             .catch(error => {
-                res.json({error})
+                res.json({ error })
             });
     } catch (error) {
-        res.status(400).json({error});
+        res.status(400).json({ error });
     }
 
 };
@@ -29,10 +30,10 @@ const show = (req, res) => {
                 })
             })
             .catch(error => {
-                res.json({error})
+                res.json({ error })
             });
     } catch (error) {
-        res.status(400).json({error});
+        res.status(400).json({ error });
     }
 
 };

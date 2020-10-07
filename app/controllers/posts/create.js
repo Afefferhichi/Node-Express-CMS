@@ -28,6 +28,7 @@ const create = (req, res) => {
             pstNumberOfDislikes,
             attachmentIds,
             pstRate,
+            createdAt: new Date(),
             createdBy,
             updatedBy
         });

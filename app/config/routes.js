@@ -41,9 +41,9 @@ router.get('/posts/:id', auth, posts.show);
 router.put('/posts/:id', auth, posts.update);
 
 // Comments part
-router.post('/comments', auth, comments.create);
+router.post('/posts/:post_id/comments', auth, comments.create);
 router.delete('/comments/:id', auth, comments.delete);
-router.get('/comments', auth, comments.list);
+router.get('/posts/:post_id/comments', auth, comments.list);
 router.get('/comments/:id', auth, comments.show);
 router.put('/comments/:id', auth, comments.update);
 
