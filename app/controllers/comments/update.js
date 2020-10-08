@@ -3,8 +3,6 @@ const Comment = require('../../models/comment');
 const update = (req, res) => {
     const {
         cmtValue,
-        cmtHelpfulCounts,
-        cmtUnhelpfulCounts,
         cmtFlagCounts,
         createdBy,
         updatedBy
@@ -24,8 +22,6 @@ const update = (req, res) => {
         try {
             Comment.findByIdAndUpdate(req.params.id, {
                 cmtValue,
-                cmtHelpfulCounts,
-                cmtUnhelpfulCounts,
                 cmtFlagCounts,
                 createdBy,
                 updatedBy,

@@ -11,12 +11,22 @@ const applyLikes = (likes, user_id) => {
     return newLikes;
 }
 
+const unApplyLikes = (likes, user_id) => {
+    const newLikes = [...likes];
+    const existingIndex = newLikes.findIndex(liked_user_id => String(liked_user_id) === user_id);
+    if(existingIndex > -1) {
+        newLikes.splice(existingIndex, 1);
+    }
+    return newLikes;
+}
+
+
+
 const like = (req, res) => {
     try {
         Post.findById(req.params.id)
             .then((post) => {
                 if (post) {
-                    console.log('Post like', req.user);
                     let likeMethod = req.route.path;
                     likeMethod = likeMethod.substr(likeMethod.lastIndexOf('/') + 1)
 
@@ -24,9 +34,11 @@ const like = (req, res) => {
                     
                     if (likeMethod === 'like') {
                         post.pstLikes = applyLikes(post.pstLikes, user_id);
+                        post.pstDislikes = unApplyLikes(post.pstDislikes, user_id);
                     }
                     else if (likeMethod === 'dislike') {
                         post.pstDislikes = applyLikes(post.pstDislikes, user_id);
+                        post.pstLikes = unApplyLikes(post.pstLikes, user_id);
                     }
 
                     post.save((error, savedPost) => {

@@ -47,6 +47,8 @@ router.post('/posts/:post_id/comments', auth, comments.create);
 router.delete('/comments/:id', auth, comments.delete);
 router.get('/posts/:post_id/comments', auth, comments.list);
 router.get('/comments/:id', auth, comments.show);
+router.get('/comments/:id/helpful', auth, comments.helpful);
+router.get('/comments/:id/unhelpful', auth, comments.helpful);
 router.put('/comments/:id', auth, comments.update);
 
 module.exports = router;
