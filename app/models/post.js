@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema({
     "pstTitle": { type: String, required: true },
     "pstContent": { type: String, required: true },
     "pstNumberOfLikes": { type: Number, default: 0 },
-    "pstNumberOfDislikes": { type: Number },
+    "pstNumberOfDislikes": { type: Number, default: 0 },
     "attachmentIds": { type: String },
     "pstRate": { type: String },
     "createdAt": { type: Date, default: Date.new },
