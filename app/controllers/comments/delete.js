@@ -25,7 +25,8 @@ const deleteComment = (req, res) => {
                 } else {
                     res.json({ success: false, error_code: 'NO_EXIST' })
                 }
-            });
+            })
+            .catch(error => res.status(400).json({ error }));
     } catch (error) {
         res.status(400).json({ error });
     }

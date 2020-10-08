@@ -4,7 +4,7 @@ const list = (req, res) => {
     try {
         const condition = req.query;
         Post.find(condition)
-            .populate('comments', 'cmtValue _id')
+            .populate('comments', 'cmtValue postId _id')
             .then(posts => {
                 res.json({
                     success: true,

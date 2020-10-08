@@ -3,6 +3,7 @@ const Comment = require('../../models/comment');
 const list = (req, res) => {
     try {
         const condition = req.query;
+        condition['postId'] = req.params.post_id;
         Comment.find(condition)
             .then(comments => {
                 res.json({
