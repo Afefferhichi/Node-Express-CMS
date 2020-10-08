@@ -13,17 +13,15 @@ const auth = (req, res, next) => {
     const TOKEN_SECRET = process.env.TOKEN_SECRET;
     // We should use this for the token-authentication in future, but for now,
     // it's skipped out due to the development's speed.
-    next();
-    return;
     const token = req.header('token');
-    if (!token) return res.status(401).send('Access Denied');
+    if (!token) return res.status(401).json({message: 'Access Denied'});
 
     try {
         const verified = jwt.verify(token, TOKEN_SECRET);
         req.user = verified;
         next();
     } catch (err) {
-        res.status(400).send('Invalid Token');
+        res.status(400).json({message: 'Invalid Token'});
     }
 };
 

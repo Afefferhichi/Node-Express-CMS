@@ -1,32 +1,42 @@
 const Post = require('../../models/post');
 
+const applyLikes = (likes, user_id) => {
+    const newLikes = [...likes];
+    const existingIndex = newLikes.findIndex(liked_user_id => String(liked_user_id) === user_id);
+    if(existingIndex > -1) {
+        newLikes.splice(existingIndex, 1);
+    } else {
+        newLikes.push(user_id)
+    }
+    return newLikes;
+}
+
 const like = (req, res) => {
     try {
         Post.findById(req.params.id)
             .then((post) => {
                 if (post) {
+                    console.log('Post like', req.user);
                     let likeMethod = req.route.path;
                     likeMethod = likeMethod.substr(likeMethod.lastIndexOf('/') + 1)
 
-                    let newLikes = post.pstNumberOfLikes;
-                    let newDiskLikes = post.pstNumberOfDislikes;
+                    const user_id = String(req.user._id);
+                    
                     if (likeMethod === 'like') {
-                        newLikes++;
-                        post.pstNumberOfLikes = newLikes;
+                        post.pstLikes = applyLikes(post.pstLikes, user_id);
                     }
                     else if (likeMethod === 'dislike') {
-                        newDiskLikes++;
-                        post.pstNumberOfDislikes = newDiskLikes;
+                        post.pstDislikes = applyLikes(post.pstDislikes, user_id);
                     }
 
-                    post.save(error => {
+                    post.save((error, savedPost) => {
                         if (error)
                             res.status(400).json({ success: false, error });
                         else
                             res.json({
                                 success: true,
-                                pstNumberOfLikes: newLikes,
-                                pstNumberOfDislikes: newDiskLikes
+                                pstLikes: savedPost.pstLikes,
+                                pstDislikes: savedPost.pstDislikes
                             });
                     });
                 } else {

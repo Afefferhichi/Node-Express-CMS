@@ -4,8 +4,14 @@ const postSchema = new mongoose.Schema({
     "pstOrder": { type: String },
     "pstTitle": { type: String, required: true },
     "pstContent": { type: String, required: true },
-    "pstNumberOfLikes": { type: Number, default: 0 },
-    "pstNumberOfDislikes": { type: Number, default: 0 },
+    "pstLikes": [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    "pstDislikes": [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
     "attachmentIds": { type: String },
     "pstRate": { type: String },
     "createdAt": { type: Date, default: Date.new },
