@@ -6,7 +6,6 @@ const deleteComment = (req, res) => {
         Comment
             .findByIdAndDelete(req.params.id)
             .then((deletedComment) => {
-                console.log('deleteComment', deletedComment, req.params.id);
                 if (deletedComment) {
                     Post
                         .findById(deletedComment.postId)

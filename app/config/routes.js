@@ -38,6 +38,8 @@ router.post('/posts', auth, posts.create);
 router.delete('/posts/:id', auth, posts.delete);
 router.get('/posts', auth, posts.list);
 router.get('/posts/:id', auth, posts.show);
+router.get('/posts/:id/like', auth, posts.like);
+router.get('/posts/:id/dislike', auth, posts.like);
 router.put('/posts/:id', auth, posts.update);
 
 // Comments part
