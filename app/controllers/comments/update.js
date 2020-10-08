@@ -8,29 +8,34 @@ const update = (req, res) => {
         updatedBy
     } = req.body;
     if (
-        !cmtValue ||
-        !cmtHelpfulCounts ||
-        !cmtUnhelpfulCounts ||
-        !cmtFlagCounts ||
-        !createdBy ||
-        !updatedBy
+        !cmtValue
     ) {
         res.json({
             error: 'All fields are mandatory !'
         })
     } else {
         try {
-            Comment.findByIdAndUpdate(req.params.id, {
-                cmtValue,
-                cmtFlagCounts,
-                createdBy,
-                updatedBy,
-                updatedAt: new Date()
-            })
-                .then(comment => res.json({success: comment !== null}))
-                .catch(error => res.status(400).json({success: false, error}));
+            Comment.findById(req.params.id)
+                .then(comment => {
+                    if (comment) {
+                        comment.cmtValue = cmtValue;
+                        comment.cmtFlagCounts = cmtFlagCounts;
+                        comment.createdBy = createdBy;
+                        comment.updatedBy = updatedBy;
+                        comment.updatedAt = new Date();
+                        comment.save((error, updatedComment) => {
+                            if (error)
+                                res.status(400).json({ success: false, error });
+                            else
+                                res.json({ success: true, updatedComment })
+                        });
+                    } else {
+                        res.status(400).json({ success: false });
+                    }
+                })
+                .catch(error => res.status(400).json({ success: false, error }));
         } catch (error) {
-            res.status(400).json({success: false, error});
+            res.status(400).json({ success: false, error });
         }
     }
 
