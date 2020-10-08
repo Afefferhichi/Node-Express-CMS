@@ -4,6 +4,8 @@ const router = express.Router();
 const users_controller = require('../controllers/users');
 const {auth, allUsers, addUser, deleteUser, login, profile, register, updateUser} = users_controller;
 
+const {uploader} = require('../libs/uploader');
+
 const templates = require('../controllers/templates')
 const webpages = require('../controllers/webpages')
 const posts = require('../controllers/posts')
@@ -43,7 +45,7 @@ router.get('/posts/:id/dislike', auth, posts.like);
 router.put('/posts/:id', auth, posts.update);
 
 // Comments part
-router.post('/posts/:post_id/comments', auth, comments.create);
+router.post('/posts/:post_id/comments', [auth, uploader.single('uploaded_file')], comments.create);
 router.delete('/comments/:id', auth, comments.delete);
 router.get('/posts/:post_id/comments', auth, comments.list);
 router.get('/comments/:id', auth, comments.show);
