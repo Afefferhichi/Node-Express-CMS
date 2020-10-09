@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+const Comment = require('./comment');
 
 const postSchema = new mongoose.Schema({
     "pstOrder": { type: String },
@@ -12,7 +13,10 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    "attachmentIds": { type: String },
+    "attachment": {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Attachment"
+    },
     "pstRate": { type: String },
     "createdAt": { type: Date, default: Date.new },
     "updatedAt": { type: Date, default: Date.new },
@@ -23,6 +27,10 @@ const postSchema = new mongoose.Schema({
         ref: "Comment"
     }]
 });
-//,{ collection: 'users' });
+
+postSchema.post('remove', async (doc, next) => {
+    await Comment.deleteMany({ _id: { $in: doc.comments } });
+    next();
+});
 
 module.exports = mongoose.model('Post', postSchema);

@@ -1,6 +1,7 @@
 const Post = require('../../models/post');
+const Attachment = require('../../models/attachment');
 
-const create = (req, res) => {
+const create = async (req, res) => {
     const {
         pstOrder,
         pstTitle,
@@ -12,6 +13,7 @@ const create = (req, res) => {
         createdBy,
         updatedBy
     } = req.body;
+
     if (
         !pstTitle ||
         !pstContent
@@ -20,6 +22,15 @@ const create = (req, res) => {
             error: 'All fields are mandatory !'
         })
     } else {
+        let savedAttachment
+        if (req.file) {
+            try {
+                const attachment = new Attachment(req.file);
+                savedAttachment = (await attachment.save());
+            } catch (error) {
+                console.log('error on saving attachment', error);
+            }
+        }
         const post = new Post({
             pstOrder,
             pstTitle,
@@ -30,12 +41,13 @@ const create = (req, res) => {
             pstRate,
             createdAt: new Date(),
             createdBy,
-            updatedBy
+            updatedBy,
+            attachment: savedAttachment
         });
         try {
             post.save((error, createdPost) => {
                 if (error) {
-                    res.json({error})
+                    res.json({ error })
                 } else {
                     res.json({
                         createdPost,
@@ -44,7 +56,7 @@ const create = (req, res) => {
                 }
             })
         } catch (error) {
-            res.status(400).json({error});
+            res.status(400).json({ error });
         }
     }
 

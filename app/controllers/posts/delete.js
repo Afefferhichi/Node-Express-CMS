@@ -4,14 +4,12 @@ const Comment = require('../../models/comment');
 const deletePost = (req, res) => {
     try {
         Post
-            .findByIdAndDelete(req.params.id)
-            .then((deletedPost) => {
-                if (deletedPost) {
+            .findById(req.params.id)
+            .then(post => {
+                if (post) {
                     try {
-                        deletedPost.comments.map(async comment_id => {
-                            await Comment.findByIdAndDelete(comment_id);
-                        })
-                        res.json({ success: true, deletedPost })
+                        post.remove();
+                        res.json({ success: true, deletedPost: post })
                     } catch (error) {
                         res.status(400).json({ error });
                     }
