@@ -36,7 +36,7 @@ router.get('/webpages/:id', auth, webpages.show);
 router.put('/webpages/:id', auth, webpages.update);
 
 // Posts part
-router.post('/posts', [auth, uploader.single('uploaded_file')], posts.create);
+router.post('/posts', [auth, uploader.array('uploaded_file')], posts.create);
 router.delete('/posts/:id', auth, posts.delete);
 router.get('/posts', auth, posts.list);
 router.get('/posts/:id', auth, posts.show);
@@ -45,7 +45,7 @@ router.get('/posts/:id/dislike', auth, posts.like);
 router.put('/posts/:id', auth, posts.update);
 
 // Comments part
-router.post('/posts/:post_id/comments', auth, comments.create);
+router.post('/posts/:post_id/comments', [auth, uploader.array('uploaded_file')], comments.create);
 router.delete('/comments/:id', auth, comments.delete);
 router.get('/posts/:post_id/comments', auth, comments.list);
 router.get('/comments/:id', auth, comments.show);

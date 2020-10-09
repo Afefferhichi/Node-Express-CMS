@@ -4,7 +4,7 @@ const list = (req, res) => {
     try {
         const condition = req.query;
         Post.find(condition)
-            .populate('attachment', 'originalname _id')
+            .populate('attachments', 'originalname _id')
             .populate('comments', 'cmtValue cmtHelpfuls cmtUnHelpfuls postId _id')
             .then(posts => {
                 res.json({
@@ -24,7 +24,7 @@ const list = (req, res) => {
 const show = (req, res) => {
     try {
         Post.findById(req.params.id)
-            .populate('attachment', 'originalname _id')
+            .populate('attachments', 'originalname _id')
             .populate('comments', 'cmtValue cmtHelpfuls cmtUnHelpfuls postId _id')
             .then(post => {
                 res.json({

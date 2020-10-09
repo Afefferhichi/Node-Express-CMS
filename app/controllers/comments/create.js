@@ -1,5 +1,6 @@
 const Comment = require('../../models/comment');
 const Post = require('../../models/post');
+const Attachment = require('../../models/attachment');
 
 const create = (req, res) => {
     const {
@@ -35,12 +36,24 @@ const create = (req, res) => {
                         } else {
                             post.comments = post.comments.concat(createdComment._id);
                             try {
-                                post.save(error => {
+                                post.save(async error => {
                                     if (error) {
                                         res.json({ error });
                                     } else {
+                                        let comment2;
+                                        if (req.files) {
+                                            try {
+                                                comment.attachments = await Promise.all(req.files.map(async file => {
+                                                    const attachment = new Attachment(file);
+                                                    return (await attachment.save());
+                                                }));
+                                                comment2 = await comment.save();
+                                            } catch (error) {
+                                                console.log('error on saving attachment 3', error);
+                                            }
+                                        }
                                         res.json({
-                                            createdComment,
+                                            createdComment: comment2 || comment,
                                             success: true
                                         });
                                     }

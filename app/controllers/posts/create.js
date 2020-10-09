@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Post = require('../../models/post');
 const Attachment = require('../../models/attachment');
 
@@ -8,7 +9,6 @@ const create = async (req, res) => {
         pstContent,
         pstNumberOfLikes,
         pstNumberOfDislikes,
-        attachmentIds,
         pstRate,
         createdBy,
         updatedBy
@@ -22,33 +22,36 @@ const create = async (req, res) => {
             error: 'All fields are mandatory !'
         })
     } else {
-        let savedAttachment
-        if (req.file) {
-            try {
-                const attachment = new Attachment(req.file);
-                savedAttachment = (await attachment.save());
-            } catch (error) {
-                console.log('error on saving attachment', error);
-            }
-        }
+
         const post = new Post({
             pstOrder,
             pstTitle,
             pstContent,
             pstNumberOfLikes,
             pstNumberOfDislikes,
-            attachmentIds,
             pstRate,
             createdAt: new Date(),
             createdBy,
             updatedBy,
-            attachment: savedAttachment
+            attachments: []
         });
+
         try {
-            post.save((error, createdPost) => {
+            post.save(async (error, createdPost) => {
                 if (error) {
                     res.json({ error })
                 } else {
+                    if (req.files) {
+                        try {
+                            post.attachments = await Promise.all(req.files.map(async file => {
+                                const attachment = new Attachment(file);
+                                return (await attachment.save());
+                            }));
+                            await post.save();
+                        } catch (error) {
+                            console.log('error on saving attachment 2', error);
+                        }
+                    }
                     res.json({
                         createdPost,
                         success: true

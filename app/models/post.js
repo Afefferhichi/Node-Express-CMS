@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const Comment = require('./comment');
+const Attachment = require('./attachment');
 
 const postSchema = new mongoose.Schema({
     "pstOrder": { type: String },
@@ -13,10 +14,10 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    "attachment": {
+    "attachments": [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Attachment"
-    },
+    }],
     "pstRate": { type: String },
     "createdAt": { type: Date, default: Date.new },
     "updatedAt": { type: Date, default: Date.new },
@@ -29,7 +30,12 @@ const postSchema = new mongoose.Schema({
 });
 
 postSchema.post('remove', async (doc, next) => {
-    await Comment.deleteMany({ _id: { $in: doc.comments } });
+    await Comment
+        .find({ _id: { $in: doc.comments } })
+        .then((comments) => comments.map(comment => comment.remove()))
+    await Attachment
+        .find({ _id: { $in: doc.attachments } })
+        .then(attachments => attachments.map(attachment => attachment.remove()))
     next();
 });
 
