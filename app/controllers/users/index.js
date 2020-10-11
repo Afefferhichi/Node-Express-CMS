@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
     const TOKEN_SECRET = process.env.TOKEN_SECRET;
     // We should use this for the token-authentication in future, but for now,
     // it's skipped out due to the development's speed.
-    const token = req.header('token');
+    const token = req.header('token') || req.query.token;
     if (!token) return res.status(401).json({message: 'Access Denied'});
 
     try {

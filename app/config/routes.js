@@ -10,6 +10,7 @@ const templates = require('../controllers/templates')
 const webpages = require('../controllers/webpages')
 const posts = require('../controllers/posts')
 const comments = require('../controllers/comments')
+const attachments = require('../controllers/attachments')
 
 // Users part
 router.get('/allUsers', auth, allUsers);
@@ -42,7 +43,7 @@ router.get('/posts', auth, posts.list);
 router.get('/posts/:id', auth, posts.show);
 router.get('/posts/:id/like', auth, posts.like);
 router.get('/posts/:id/dislike', auth, posts.like);
-router.put('/posts/:id', auth, posts.update);
+router.put('/posts/:id', [auth, uploader.array('attachments')], posts.update);
 
 // Comments part
 router.post('/posts/:post_id/comments', [auth, uploader.array('attachments')], comments.create);
@@ -51,6 +52,10 @@ router.get('/posts/:post_id/comments', auth, comments.list);
 router.get('/comments/:id', auth, comments.show);
 router.get('/comments/:id/helpful', auth, comments.helpful);
 router.get('/comments/:id/unhelpful', auth, comments.helpful);
-router.put('/comments/:id', auth, comments.update);
+router.put('/comments/:id', [auth, uploader.array('attachments')], comments.update);
+
+// Attachments part
+router.get('/attachments/:id', auth, attachments.show);
+
 
 module.exports = router;

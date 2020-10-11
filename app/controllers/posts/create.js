@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Post = require('../../models/post');
 const Attachment = require('../../models/attachment');
 
@@ -41,7 +40,7 @@ const create = async (req, res) => {
                 if (error) {
                     res.json({ error })
                 } else {
-                    if (req.files) {
+                    if (req.files && req.files.length > 0) {
                         try {
                             post.attachments = await Promise.all(req.files.map(async file => {
                                 const attachment = new Attachment(file);

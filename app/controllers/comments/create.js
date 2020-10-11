@@ -41,7 +41,7 @@ const create = (req, res) => {
                                         res.json({ error });
                                     } else {
                                         let comment2;
-                                        if (req.files) {
+                                        if (req.files && req.files.length > 0) {
                                             try {
                                                 comment.attachments = await Promise.all(req.files.map(async file => {
                                                     const attachment = new Attachment(file);

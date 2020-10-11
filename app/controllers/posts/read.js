@@ -4,8 +4,17 @@ const list = (req, res) => {
     try {
         const condition = req.query;
         Post.find(condition)
-            .populate('attachments', 'originalname _id')
-            .populate('comments', 'cmtValue cmtHelpfuls cmtUnHelpfuls postId _id')
+            .populate('attachments', 'filename originalname _id')
+            .populate({
+                path: 'comments',
+                model: 'Comment',
+                select: 'cmtValue cmtHelpfuls cmtUnHelpfuls postId _id',
+                populate: {
+                    path: 'attachments',
+                    mode: 'Attachment',
+                    select: 'filename originalname _id'
+                }
+            })
             .then(posts => {
                 res.json({
                     success: true,
@@ -24,7 +33,7 @@ const list = (req, res) => {
 const show = (req, res) => {
     try {
         Post.findById(req.params.id)
-            .populate('attachments', 'originalname _id')
+            .populate('attachments', 'filename originalname _id')
             .populate('comments', 'cmtValue cmtHelpfuls cmtUnHelpfuls postId _id')
             .then(post => {
                 res.json({
