@@ -4,7 +4,8 @@
   "description": "3almadmoon back-end with nodeJS",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "create-admin": "node ./app/utils/sysman/CreateAdmin.js"
   },
   "author": "Ferchichi Afef",
   "license": "ISC",

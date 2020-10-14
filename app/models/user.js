@@ -11,7 +11,9 @@ var userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        index: true,
     },
     password: {
         type: String,
@@ -35,6 +37,9 @@ var userSchema = new mongoose.Schema({
         type: String
     },
     photoLocation: {
+        type: String
+    },
+    role: {
         type: String
     },
     createdAt: {
