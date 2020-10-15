@@ -17,6 +17,7 @@ router.get('/allUsers', auth, allUsers);
 router.get('/users', auth, allUsers);
 router.post('/addUser', auth, addUser);
 router.delete('/deleteUser/:id', auth, deleteUser);
+router.delete('/users/:id', auth, deleteUser);
 router.post('/login', login);
 router.get('/profile', auth, profile);
 router.post('/register', register);

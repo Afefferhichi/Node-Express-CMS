@@ -1,14 +1,16 @@
 const Template = require('../../models/template');
 const update = (req, res) => {
     const {
-        tplname,
-        tplcategory,
-        tpldescription,
+        name,
+        category,
+        description,
+        html,
+        design,
     } = req.body;
     if (
-        !tplname ||
-        !tplcategory ||
-        !tpldescription
+        !name ||
+        !category ||
+        !description
     ) {
         res.json({
             error: 'All fields are mandatory !'
@@ -16,16 +18,18 @@ const update = (req, res) => {
     } else {
         try {
             Template.findByIdAndUpdate(req.params.id, {
-                tplname,
-                tplcategory,
-                tpldescription,
+                name,
+                category,
+                description,
+                html,
+                design,
                 updatedAt: new Date()
             })
-                .then(template => res.json({success: template !== null}))
-                .catch(error => res.status(400).json({error}));
+                .then(template => res.json({ success: template !== null }))
+                .catch(error => res.status(400).json({ error }));
 
         } catch (error) {
-            res.status(400).json({error});
+            res.status(400).json({ error });
         }
     }
 };

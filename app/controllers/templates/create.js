@@ -2,28 +2,32 @@ const Template = require('../../models/template');
 
 const create = (req, res) => {
     const {
-        tplname,
-        tplcategory,
-        tpldescription,
+        name,
+        category,
+        description,
+        design,
+        html,
     } = req.body;
     if (
-        !tplname ||
-        !tplcategory ||
-        !tpldescription
+        !name ||
+        !category ||
+        !description
     ) {
         res.json({
             error: 'All fields are mandatory !'
         })
     } else {
         const template = new Template({
-            tplname,
-            tplcategory,
-            tpldescription
+            name,
+            category,
+            description,
+            design,
+            html,
         });
         try {
             template.save((error, createdTemplate) => {
                 if (error) {
-                    res.json({error})
+                    res.json({ error })
                 } else {
                     res.json({
                         createdTemplate,
@@ -32,7 +36,7 @@ const create = (req, res) => {
                 }
             })
         } catch (error) {
-            res.status(400).json({error});
+            res.status(400).json({ error });
         }
     }
 

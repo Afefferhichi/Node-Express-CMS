@@ -2,6 +2,8 @@ const User = require('../../models/user');
 const bcrypt = require('bcrypt');
 const validator = require("email-validator");
 const saltRounds = Number(process.env.SALT_ROUNDS);
+const jwt = require('jsonwebtoken');
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 const register = async (req, res) => {
     const firstname = req.body.firstname;
@@ -64,8 +66,10 @@ const register = async (req, res) => {
                                         err: err
                                     })
                                 } else {
+                                    const token = jwt.sign({_id: savedUser._id}, TOKEN_SECRET);
                                     res.json({
                                         user: savedUser,
+                                        token,
                                         success: 'Congrats your registration has been approved !'
                                     })
                                 }

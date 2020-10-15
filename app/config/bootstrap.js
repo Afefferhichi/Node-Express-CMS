@@ -1,11 +1,12 @@
 const bootstrap = () => {
     const express = require('express');
-    const bodyParser= require('body-parser');
+    const bodyParser = require('body-parser');
     const app = express();
     const dotenv = require('dotenv');
     var mongoose = require('mongoose');
     let cors = require('cors');
-    const port = process.env.PORT || 5000
+    const host = process.env.HOST || 'localhost';
+    const port = process.env.PORT || 5000;
 
     dotenv.config();
     var apiRouter = require('./routes');
@@ -18,17 +19,17 @@ const bootstrap = () => {
     app.use(bodyParser.json());
     app.use(cors(corsOptions));
 
-//route middelwares
+    //route middelwares
     app.use('/api/v1', apiRouter);
 
-//Connect to DB
+    //Connect to DB
     mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
         () => console.log('Connected to DB')
     )
 
 
-    app.listen(port, function() {
-        console.log('listening on 5000')
+    app.listen(port, host, function () {
+        console.log('listening on ', host, port)
     })
 };
 

@@ -1,17 +1,23 @@
 const mongoose = require('mongoose');
 
 const templateSchema = new mongoose.Schema({
-    tplname: {
+    name: {
         type: String,
         required: true
     },
-    tplcategory: {
+    category: {
         type: String,
         required: true
     },
-    tpldescription: {
+    description: {
         type: String,
         required: true
+    },
+    design: {
+        type: String
+    },
+    html: {
+        type: String
     },
     createdAt: {
         type: Date,
