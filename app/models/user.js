@@ -43,6 +43,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         default: 'user'
     },
+    template: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Template'
+    },
     createdAt: {
         type: Date,
         default: Date.now

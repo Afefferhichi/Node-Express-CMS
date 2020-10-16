@@ -11,11 +11,12 @@ const profile = (req, res) => {
             return res.status(401).send('unauthorized');
         }
         var data = decoded._id;
-        console.log(data)
-        // Fetch the user by id
         User.findById(data).then(function (user) {
             // Do something with the user
-            res.json(user);
+            res.json({
+                success: true,
+                user
+            });
         });
     } else {
         return res.status(401).send('unauthorized');

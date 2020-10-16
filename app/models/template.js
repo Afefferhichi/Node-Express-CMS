@@ -19,6 +19,14 @@ const templateSchema = new mongoose.Schema({
     html: {
         type: String
     },
+    enabled: {
+        type: Boolean,
+        default: false
+    },
+    users: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }],
     createdAt: {
         type: Date,
         default: Date.now

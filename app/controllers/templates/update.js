@@ -1,3 +1,4 @@
+const template = require('../../models/template');
 const Template = require('../../models/template');
 const update = (req, res) => {
     const {
@@ -17,17 +18,22 @@ const update = (req, res) => {
         })
     } else {
         try {
-            Template.findByIdAndUpdate(req.params.id, {
-                name,
-                category,
-                description,
-                html,
-                design,
-                updatedAt: new Date()
+            Template.findById(req.params.id).then(template => {
+                template.name = name;
+                template.category = category;
+                template.description = description;
+                template.html = html;
+                template.design = design;
+                template.updatedAt = new Date();
+                template
+                    .save((error, updatedTemplate) => {
+                        if(error) {
+                            res.status(400).json({ error })
+                        } else {
+                            res.json({ success: true, updatedTemplate })
+                        }
+                    })
             })
-                .then(template => res.json({ success: template !== null }))
-                .catch(error => res.status(400).json({ error }));
-
         } catch (error) {
             res.status(400).json({ error });
         }

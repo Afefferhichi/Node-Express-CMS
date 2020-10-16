@@ -29,6 +29,10 @@ router.post('/templates', auth, templates.create);
 router.delete('/templates/:id', auth, templates.delete);
 router.get('/templates', auth, templates.list);
 router.get('/templates/:id', auth, templates.show);
+router.get('/templates/:id/enable', auth, templates.setEnabled);
+router.get('/templates/:id/disable', auth, templates.setEnabled);
+router.get('/templates/:id/:user_id/make-in-use', auth, templates.makeInUse);
+router.get('/templates/:id/:user_id/make-un-use', auth, templates.makeInUse);
 router.put('/templates/:id', auth, templates.update);
 
 // Webpages part

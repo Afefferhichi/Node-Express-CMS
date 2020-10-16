@@ -5,7 +5,10 @@ const list = (req, res) => {
         const condition = req.query;
         Template.find(condition)
             .then(templates => {
-                res.json(templates)
+                res.json({
+                    success: true,
+                    templates,
+                })
             })
             .catch(error => {
                 res.json({error})
@@ -20,7 +23,10 @@ const show = (req, res) => {
     try {
         Template.findById(req.params.id)
             .then(template => {
-                res.json(template)
+                res.json({
+                    success: true,
+                    template
+                })
             })
             .catch(error => {
                 res.json({error})
