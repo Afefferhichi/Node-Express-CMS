@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "create-admin": "node ./app/utils/sysman/CreateAdmin.js"
+    "create-admin": "node ./app/utils/sysman/CreateAdmin.js",
+    "send-test-mail": "node ./app/utils/mail/SendTestMail.js"
   },
   "author": "Ferchichi Afef",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.3.0",
     "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",

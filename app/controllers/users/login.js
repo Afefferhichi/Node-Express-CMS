@@ -26,7 +26,7 @@ const login = (req, res) => {
                         res.status(400).json({message: "password incorrect"});
                     } else {
                         //create Token
-                        const token = jwt.sign({_id: foundUser._id}, TOKEN_SECRET);
+                        const token = jwt.sign({_id: foundUser._id, password}, TOKEN_SECRET);
                         // res.header('token', token).send(token);
                         res.json({user: foundUser, token: token});
                         console.log(foundUser);
