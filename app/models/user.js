@@ -45,6 +45,10 @@ var userSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Template",
   },
+  enabled: {
+    type: Boolean,
+    default: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const users_controller = require('../controllers/users');
-const {auth, allUsers, addUser, deleteUser, login, profile, register, updateUser} = users_controller;
+const {auth, allUsers, addUser, deleteUser, login, profile, register, updateUser, setEnabled} = users_controller;
 
 const {uploader} = require('../libs/uploader');
 
@@ -24,6 +24,7 @@ router.post('/register', register);
 router.post('/updateUser/:id', auth, updateUser);
 router.put('/users/:id', [auth, uploader.array('attachments')], updateUser);
 router.put('/admin/changeUserPassword/:id', auth, updateUser);
+router.put('/admin/setUserEnabled/:id/:enableMode', auth, users_controller.setEnabled);
 
 
 // Templates part

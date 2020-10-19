@@ -9,6 +9,7 @@ const login = require("./login");
 const profile = require("./profile");
 const register = require("./register");
 const updateUser = require("./updateUser");
+const setEnabled = require("./setEnabled");
 
 const auth = async (req, res, next) => {
   const TOKEN_SECRET = process.env.TOKEN_SECRET;
@@ -41,4 +42,5 @@ module.exports = {
   profile,
   register,
   updateUser,
+  setEnabled,
 };

@@ -21,17 +21,21 @@ const login = (req, res) => {
             {email: email}
         ).populate('photo').then(foundUser => {
             if (foundUser) {
-                bcrypt.compare(password, foundUser.password, function (err, isMatch) {
-                    if (!isMatch) {
-                        res.status(400).json({message: "password incorrect"});
-                    } else {
-                        //create Token
-                        const token = jwt.sign({_id: foundUser._id, password, role: foundUser.role}, TOKEN_SECRET);
-                        // res.header('token', token).send(token);
-                        res.json({user: foundUser, token: token});
-                        console.log(foundUser);
-                    }
-                });
+                if(!foundUser.enabled) {
+                    res.status(403).json({message: "User is not allowed by admin"})
+                } else {
+                    bcrypt.compare(password, foundUser.password, function (err, isMatch) {
+                        if (!isMatch) {
+                            res.status(400).json({message: "password incorrect"});
+                        } else {
+                            //create Token
+                            const token = jwt.sign({_id: foundUser._id, password, role: foundUser.role}, TOKEN_SECRET);
+                            // res.header('token', token).send(token);
+                            res.json({user: foundUser, token: token});
+                            console.log(foundUser);
+                        }
+                    });
+                }
             } else {
                 res.status(404).json({message: "User does not exist"})
             }
