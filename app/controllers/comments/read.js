@@ -4,7 +4,9 @@ const list = (req, res) => {
     try {
         const condition = req.query;
         condition['postId'] = req.params.post_id;
-        Comment.find(condition)
+        Comment
+            .find(condition)
+            .populate('author')
             .then(comments => {
                 res.json({
                     success: true,
@@ -22,7 +24,9 @@ const list = (req, res) => {
 
 const show = (req, res) => {
     try {
-        Comment.findById(req.params.id)
+        Comment
+            .findById(req.params.id)
+            .populate('author')
             .then(comment => {
                 res.json({
                     success: true,

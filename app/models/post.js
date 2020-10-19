@@ -3,6 +3,10 @@ const Comment = require('./comment');
 const Attachment = require('./attachment');
 
 const postSchema = new mongoose.Schema({
+    "author": {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     "pstOrder": { type: String },
     "pstTitle": { type: String, required: true },
     "pstContent": { type: String, required: true },

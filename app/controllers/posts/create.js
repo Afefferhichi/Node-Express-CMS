@@ -32,7 +32,8 @@ const create = async (req, res) => {
             createdAt: new Date(),
             createdBy,
             updatedBy,
-            attachments: []
+            attachments: [],
+            author: req.user._id,
         });
 
         try {

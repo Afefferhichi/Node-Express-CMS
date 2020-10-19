@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Attachment = require('./attachment');
 
 const commentSchema = new mongoose.Schema({
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     cmtValue: { type: String, required: true },
     attachments: [{
         type: mongoose.Schema.Types.ObjectId,

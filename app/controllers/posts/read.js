@@ -3,8 +3,10 @@ const Post = require('../../models/post');
 const list = (req, res) => {
     try {
         const condition = req.query;
+        condition['author'] = String(req.user._id);
         Post.find(condition)
             .populate('attachments', 'filename originalname _id')
+            .populate('author')
             .populate({
                 path: 'comments',
                 model: 'Comment',
@@ -13,6 +15,11 @@ const list = (req, res) => {
                     path: 'attachments',
                     mode: 'Attachment',
                     select: 'filename originalname _id'
+                },
+                populate: {
+                    path: 'author',
+                    mode: 'User',
+                    select: 'photo _id'
                 }
             })
             .then(posts => {
@@ -35,6 +42,22 @@ const show = (req, res) => {
         Post.findById(req.params.id)
             .populate('attachments', 'filename originalname _id')
             .populate('comments', 'cmtValue cmtHelpfuls cmtUnHelpfuls postId _id')
+            .populate('author')
+            .populate({
+                path: 'comments',
+                model: 'Comment',
+                select: 'cmtValue cmtHelpfuls cmtUnHelpfuls postId _id',
+                populate: {
+                    path: 'attachments',
+                    mode: 'Attachment',
+                    select: 'filename originalname _id'
+                },
+                populate: {
+                    path: 'author',
+                    mode: 'User',
+                    select: 'photo _id'
+                }
+            })
             .then(post => {
                 res.json({
                     success: true,

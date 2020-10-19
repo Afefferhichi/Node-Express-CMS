@@ -21,7 +21,6 @@ const auth = async (req, res, next) => {
     const verified = jwt.verify(token, TOKEN_SECRET);
     const user = await User.findById(verified._id);
     const isMatch = await bcrypt.compare(verified.password, user.password);
-    console.log("verified", verified, isMatch);
     if (isMatch) {
       req.user = verified;
       next();

@@ -16,7 +16,9 @@ const update = (req, res) => {
         })
     } else {
         try {
-            Comment.findById(req.params.id)
+            Comment
+                .findById(req.params.id)
+                .populate('author')
                 .then(comment => {
                     if (comment) {
                         comment.cmtValue = cmtValue;
