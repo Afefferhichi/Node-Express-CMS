@@ -23,6 +23,7 @@ router.get('/profile', auth, profile);
 router.post('/register', register);
 router.post('/updateUser/:id', auth, updateUser);
 router.put('/users/:id', [auth, uploader.array('attachments')], updateUser);
+router.put('/admin/changeUserPassword/:id', auth, updateUser);
 
 
 // Templates part

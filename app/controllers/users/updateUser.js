@@ -3,6 +3,7 @@ const Attachment = require("../../models/attachment");
 const bcrypt = require("bcrypt");
 const saltRounds = Number(process.env.SALT_ROUNDS);
 const jwt = require("jsonwebtoken");
+const user = require("../../models/user");
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 const updateEmail = async (req, res) => {
@@ -76,7 +77,10 @@ const updatePassword = async (req, res) => {
           const newPasswordHash = await bcrypt.hash(newPassword, salt);
           user.password = newPasswordHash;
           const savedUser = await user.save();
-          const token = jwt.sign({ _id: savedUser._id, password: newPassword }, TOKEN_SECRET);
+          const token = jwt.sign(
+            { _id: savedUser._id, password: newPassword, role: savedUser.role },
+            TOKEN_SECRET
+          );
           res.json({ success: true, token });
         }
       }
@@ -119,6 +123,25 @@ const updateAvatar = async (req, res) => {
   }
 };
 
+const updatePasswordByAdmin = async (req, res) => {
+  if (req.user.role === "admin") {
+    const user = await User.findById(req.params.id);
+    const { newPassword } = req.body;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const newPasswordHash = await bcrypt.hash(newPassword, salt);
+    user.password = newPasswordHash;
+    const savedUser = await user.save();
+    res.json({ success: true, savedUser });
+  } else {
+    res.status(400).json({
+      error: {
+        code: "ACCESS_DENIED",
+        message: "Access denied",
+      },
+    });
+  }
+};
+
 const updateUser = (req, res) => {
   const { mode } = req.body;
   switch (mode) {
@@ -127,6 +150,9 @@ const updateUser = (req, res) => {
       break;
     case "updatePassword":
       updatePassword(req, res);
+      break;
+    case "updatePasswordByAdmin":
+      updatePasswordByAdmin(req, res);
       break;
     case "updateAvatar":
       updateAvatar(req, res);

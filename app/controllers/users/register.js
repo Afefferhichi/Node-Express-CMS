@@ -66,7 +66,7 @@ const register = async (req, res) => {
                                         err: err
                                     })
                                 } else {
-                                    const token = jwt.sign({_id: savedUser._id, password}, TOKEN_SECRET);
+                                    const token = jwt.sign({_id: savedUser._id, password, role: savedUser.role}, TOKEN_SECRET);
                                     res.json({
                                         user: savedUser,
                                         token,
