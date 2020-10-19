@@ -19,7 +19,7 @@ const login = (req, res) => {
     } else {
         User.findOne(
             {email: email}
-        ).then(foundUser => {
+        ).populate('photo').then(foundUser => {
             if (foundUser) {
                 bcrypt.compare(password, foundUser.password, function (err, isMatch) {
                     if (!isMatch) {

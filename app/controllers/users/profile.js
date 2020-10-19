@@ -11,7 +11,7 @@ const profile = (req, res) => {
             return res.status(401).send('unauthorized');
         }
         var data = decoded._id;
-        User.findById(data).then(function (user) {
+        User.findById(data).populate('photo').then(function (user) {
             // Do something with the user
             res.json({
                 success: true,

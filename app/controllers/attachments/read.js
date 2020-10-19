@@ -1,5 +1,4 @@
 const Attachment = require('../../models/attachment');
-const fs = require('fs');
 
 const show = (req, res) => {
     try {

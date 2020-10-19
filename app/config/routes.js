@@ -62,7 +62,7 @@ router.get('/comments/:id/unhelpful', auth, comments.helpful);
 router.put('/comments/:id', [auth, uploader.array('attachments')], comments.update);
 
 // Attachments part
-router.get('/attachments/:id', auth, attachments.show);
+router.get('/attachments/:id', attachments.show);
 
 
 module.exports = router;

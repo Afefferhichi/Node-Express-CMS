@@ -1,12 +1,18 @@
 const bootstrap = () => {
+    const fs = require('fs');
     const express = require('express');
     const bodyParser = require('body-parser');
     const app = express();
+    const https = require('https');
     const dotenv = require('dotenv');
     var mongoose = require('mongoose');
     let cors = require('cors');
     const host = process.env.HOST || 'localhost';
     const port = process.env.PORT || 5000;
+    const key = fs.readFileSync('./key.pem');
+    const cert = fs.readFileSync('./cert.pem');
+
+    const server = https.createServer({key: key, cert: cert }, app);
 
     dotenv.config();
     var apiRouter = require('./routes');
@@ -28,7 +34,7 @@ const bootstrap = () => {
     )
 
 
-    app.listen(port, host, function () {
+    server.listen(port, host, function () {
         console.log('listening on ', host, port)
     })
 };
