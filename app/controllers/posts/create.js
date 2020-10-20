@@ -1,5 +1,6 @@
 const Post = require('../../models/post');
 const Attachment = require('../../models/attachment');
+const User = require('../../models/user');
 
 const create = async (req, res) => {
     const {
@@ -33,7 +34,7 @@ const create = async (req, res) => {
             createdBy,
             updatedBy,
             attachments: [],
-            author: req.user._id,
+            author: await User.findById(req.user._id),
         });
 
         try {

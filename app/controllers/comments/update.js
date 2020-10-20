@@ -1,5 +1,6 @@
 const Comment = require('../../models/comment');
 const Attachment = require('../../models/attachment');
+const User = require("../../models/user");
 
 const update = (req, res) => {
     const {
@@ -45,6 +46,7 @@ const update = (req, res) => {
                                             res.status(400).json({ success: false, error });
                                         else {
                                             updatedComment.attachments = await Attachment.find({ _id: { $in: updatedComment.attachments } })
+                                            updatedComment.author = await User.findById(req.user._id);
                                             res.json({ success: true, updatedComment })
                                         }
                                     });
