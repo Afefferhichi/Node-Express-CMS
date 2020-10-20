@@ -20,11 +20,12 @@ const commentSchema = new mongoose.Schema({
         ref: "User"
     }],
     cmtFlagCounts: { type: String },
+    postId: { type: mongoose.Schema.Types.ObjectId },
+    visible: { type: Boolean, default: true,},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     createdBy: { type: String },
     updatedBy: { type: String },
-    postId: { type: mongoose.Schema.Types.ObjectId }
 });
 
 commentSchema.post('remove', async (doc, next) => {

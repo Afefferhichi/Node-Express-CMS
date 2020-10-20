@@ -4,7 +4,8 @@ const list = (req, res) => {
   try {
     const condition = req.query;
     if (req.user.role !== "admin") {
-      condition["author"] = String(req.user._id);
+      condition["visible"] = true;
+      // condition["author"] = String(req.user._id);
     }
     Post.find(condition)
       .populate("author")
@@ -12,7 +13,8 @@ const list = (req, res) => {
       .populate({
         path: "comments",
         model: "Comment",
-        select: "cmtValue cmtHelpfuls cmtUnHelpfuls postId _id",
+        select: "cmtValue cmtHelpfuls cmtUnHelpfuls postId visible email _id",
+        // ...(req.user.role !== "admin" ? { match: { visible: true } } : {}),
         populate: [
           {
             path: "attachments",
@@ -22,7 +24,7 @@ const list = (req, res) => {
           {
             path: "author",
             mode: "User",
-            select: "photo _id",
+            select: "firstname lastname photo email _id",
           },
         ],
       })
@@ -44,12 +46,15 @@ const show = (req, res) => {
   try {
     Post.findById(req.params.id)
       .populate("attachments", "filename originalname _id")
-      .populate("comments", "cmtValue cmtHelpfuls cmtUnHelpfuls postId _id")
+      .populate(
+        "comments",
+        "cmtValue cmtHelpfuls cmtUnHelpfuls postId visible email _id"
+      )
       .populate("author")
       .populate({
         path: "comments",
         model: "Comment",
-        select: "cmtValue cmtHelpfuls cmtUnHelpfuls postId _id",
+        select: "cmtValue cmtHelpfuls cmtUnHelpfuls postId visible email _id",
         populate: [
           {
             path: "attachments",
@@ -59,7 +64,7 @@ const show = (req, res) => {
           {
             path: "author",
             mode: "User",
-            select: "photo _id",
+            select: "firstname lastname photo _id",
           },
         ],
       })

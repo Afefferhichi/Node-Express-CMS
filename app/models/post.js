@@ -3,31 +3,32 @@ const Comment = require('./comment');
 const Attachment = require('./attachment');
 
 const postSchema = new mongoose.Schema({
-    "author": {
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    "pstOrder": { type: String },
-    "pstTitle": { type: String, required: true },
-    "pstContent": { type: String, required: true },
-    "pstLikes": [{
+    pstOrder: { type: String },
+    pstTitle: { type: String, required: true },
+    pstContent: { type: String, required: true },
+    pstLikes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    "pstDislikes": [{
+    pstDislikes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    "attachments": [{
+    attachments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Attachment"
     }],
-    "pstRate": { type: String },
-    "createdAt": { type: Date, default: Date.new },
-    "updatedAt": { type: Date, default: Date.new },
-    "createdBy": { type: String },
-    "updatedBy": { type: String },
-    "comments": [{
+    pstRate: { type: String },
+    visible: { type: Boolean, default: true,},
+    createdAt: { type: Date, default: Date.new },
+    updatedAt: { type: Date, default: Date.new },
+    createdBy: { type: String },
+    updatedBy: { type: String },
+    comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
     }]

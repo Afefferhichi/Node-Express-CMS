@@ -3,6 +3,7 @@ const deleteComment = require('./delete');
 const {list, show} = require('./read');
 const update = require('./update');
 const helpful = require('./helpful');
+const setVisible = require('./setVisible');
 
 module.exports = {
     create,
@@ -10,5 +11,6 @@ module.exports = {
     list,
     show,
     update,
-    helpful
+    helpful,
+    setVisible
 }

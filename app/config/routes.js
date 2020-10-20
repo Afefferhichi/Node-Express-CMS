@@ -26,7 +26,6 @@ router.put('/users/:id', [auth, uploader.array('attachments')], updateUser);
 router.put('/admin/changeUserPassword/:id', auth, updateUser);
 router.put('/admin/setUserEnabled/:id/:enableMode', auth, users_controller.setEnabled);
 
-
 // Templates part
 router.post('/templates', auth, templates.create);
 router.delete('/templates/:id', auth, templates.delete);
@@ -53,6 +52,7 @@ router.get('/posts/:id', auth, posts.show);
 router.get('/posts/:id/like', auth, posts.like);
 router.get('/posts/:id/dislike', auth, posts.like);
 router.put('/posts/:id', [auth, uploader.array('attachments')], posts.update);
+router.put('/admin/posts/:id/:visibleMethod', auth, posts.setVisible);
 
 // Comments part
 router.post('/posts/:post_id/comments', [auth, uploader.array('attachments')], comments.create);
@@ -62,6 +62,7 @@ router.get('/comments/:id', auth, comments.show);
 router.get('/comments/:id/helpful', auth, comments.helpful);
 router.get('/comments/:id/unhelpful', auth, comments.helpful);
 router.put('/comments/:id', [auth, uploader.array('attachments')], comments.update);
+router.put('/admin/comments/:id/:visibleMethod', auth, comments.setVisible);
 
 // Attachments part
 router.get('/attachments/:id', attachments.show);

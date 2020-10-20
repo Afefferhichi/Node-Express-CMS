@@ -3,7 +3,9 @@ const Comment = require('../../models/comment');
 const list = (req, res) => {
     try {
         const condition = req.query;
-        condition['postId'] = req.params.post_id;
+        if(req.params.post_id && req.params.post_id !== 'undefined') {
+            condition['postId'] = req.params.post_id;
+        }
         Comment
             .find(condition)
             .populate('author')

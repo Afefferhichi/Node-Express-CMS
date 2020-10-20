@@ -32,7 +32,7 @@ const update = (req, res) => {
             {
               path: "author",
               mode: "User",
-              select: "photo _id",
+              select: "firstname lastname photo _id",
             },
           ],
         })
