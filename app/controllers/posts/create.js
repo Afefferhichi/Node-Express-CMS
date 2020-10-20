@@ -50,7 +50,7 @@ const create = async (req, res) => {
                             }));
                             await post.save();
                         } catch (error) {
-                            console.log('error on saving attachment 2', error);
+                            res.status(400).json({ success: false, error });
                         }
                     }
                     res.json({

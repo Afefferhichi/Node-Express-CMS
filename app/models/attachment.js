@@ -16,7 +16,7 @@ attachmentSchema.post('remove', (attachment, next) => {
     try {
         fs.unlinkSync(attachment.path);
     } catch (error) {
-        console.log('Error on removing attachment', error);
+        
     }
     next();
 });

@@ -55,17 +55,14 @@ const addUser = (req, res) => {
           var dataArray = [];
           User.find({ email: email }, function (err, foundData) {
             dataArray.push(foundData);
-            console.log(dataArray);
             if (foundData.length > 0) {
               res.status(400).json({
                 message: "This account with email: " + email + " exist",
               });
             } else {
-              user.save(function (err, savedUser) {
-                if (err) {
-                  res.status(500).json({
-                    message: err,
-                  });
+              user.save(function (error, savedUser) {
+                if (error) {
+                  res.status(400).json({ success: false, error });
                 } else {
                   res.json({
                     user: user,

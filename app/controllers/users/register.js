@@ -54,7 +54,6 @@ const register = async (req, res) => {
                     User.find({email: email}, function (err, foundData) {
 
                         dataArray.push(foundData);
-                        console.log(dataArray);
                         if (foundData.length > 0) {
                             res.json({
                                 err: 'this account ' + email + ' exist'

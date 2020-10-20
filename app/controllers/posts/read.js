@@ -4,8 +4,7 @@ const list = (req, res) => {
   try {
     const condition = req.query;
     if (req.user.role !== "admin") {
-      condition["visible"] = true;
-      // condition["author"] = String(req.user._id);
+      condition['$or'] = [{visible: true}, {author: req.user._id}]
     }
     Post.find(condition)
       .populate("author")

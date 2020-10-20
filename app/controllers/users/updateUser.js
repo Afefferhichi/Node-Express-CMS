@@ -3,7 +3,6 @@ const Attachment = require("../../models/attachment");
 const bcrypt = require("bcrypt");
 const saltRounds = Number(process.env.SALT_ROUNDS);
 const jwt = require("jsonwebtoken");
-const user = require("../../models/user");
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 const updateEmail = async (req, res) => {
@@ -15,9 +14,7 @@ const updateEmail = async (req, res) => {
     });
   } else {
     try {
-      const user = await User.findOne({
-        $and: [{ email: currentEmail }, { _id: req.user._id }],
-      });
+      const user = await User.findById(req.user._id);
       if (user.email !== currentEmail) {
         res.status(400).json({
           error: { code: "INVALID_EMAIL", message: "Invalid email" },

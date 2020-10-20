@@ -51,7 +51,7 @@ const create = (req, res) => {
                         );
                         comment2 = await comment.save();
                       } catch (error) {
-                        console.log("error on saving attachment 3", error);
+                        res.status(400).json({ success: false, error });
                       }
                     }
                     res.json({
