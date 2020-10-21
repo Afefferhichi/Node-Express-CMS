@@ -22,18 +22,18 @@ const {
 
 bcrypt.genSalt(saltRounds, function (error, salt) {
   if (error) {
-    res.status(400).json({ success: false, error });
+    console.log({ success: false, error });
   } else {
     bcrypt.hash(ADMIN_PASSWORD, salt, function (error, hash) {
       if (error) {
-        res.status(400).json({ success: false, error });
+        console.log({ success: false, error });
       } else {
         User.findOne({ email: ADMIN_EMAIL }).then(async (foundUser) => {
           if (foundUser) {
             try {
               await User.findByIdAndDelete(foundUser._id);
             } catch (error) {
-              res.status(400).json({ success: false, error });
+              console.log({ success: false, error });
             }
           }
           const user = new User({
@@ -50,9 +50,9 @@ bcrypt.genSalt(saltRounds, function (error, salt) {
           });
           user.save(function (error, createdUser) {
             if (error) {
-              res.status(400).json({ success: false, error });
+              console.log({ success: false, error });
             } else {
-              res.status(400).json({ success: true, createdUser });
+              console.log({ success: true, createdUser });
             }
             process.exit();
           });
