@@ -6,6 +6,7 @@ const setEnabled = require('./setEnabled');
 const makeInUse = require('./makeInUse');
 
 module.exports = {
+    name: 'templates',
     create,
     delete: deleteTemplate,
     list,

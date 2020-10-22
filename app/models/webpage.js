@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const webpageSchema = new mongoose.Schema({
     wbpFollowers: {
         type: String,
-        required: true
     },
     wbpDescription: {
         type: String,

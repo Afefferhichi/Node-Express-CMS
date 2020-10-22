@@ -4,6 +4,7 @@ const {list, show} = require('./read');
 const update = require('./update');
 
 module.exports = {
+    name: 'webpages',
     create,
     delete: deleteWebpage,
     list,

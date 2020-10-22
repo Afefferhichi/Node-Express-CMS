@@ -25,6 +25,10 @@ const bootstrap = () => {
     app.use(bodyParser.json());
     app.use(cors(corsOptions));
 
+    app.use('/static', express.static('public'));
+
+
+
     //route middelwares
     app.use('/api/v1', apiRouter);
 
