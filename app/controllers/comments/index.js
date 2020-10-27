@@ -6,12 +6,12 @@ const helpful = require('./helpful');
 const setVisible = require('./setVisible');
 
 module.exports = {
-    name: 'comments',
-    create,
-    delete: deleteComment,
-    list,
-    show,
-    update,
-    helpful,
-    setVisible
+  name: 'comments',
+  create,
+  delete: deleteComment,
+  list,
+  show,
+  update,
+  helpful,
+  setVisible
 }

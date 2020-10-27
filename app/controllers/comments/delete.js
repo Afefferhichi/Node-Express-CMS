@@ -27,18 +27,18 @@ const deleteComment = (req, res) => {
             }
             try {
               comment.remove();
-              res.json({ success: true, deletedComment: comment });
+              res.json({success: true, deletedComment: comment});
             } catch (error) {
-              res.status(400).json({ error });
+              res.status(400).json({error});
             }
           }
         } else {
-          res.json({ success: false, error_code: "NO_EXIST" });
+          res.json({success: false, error_code: "NO_EXIST"});
         }
       })
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => res.status(400).json({error}));
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({error});
   }
 };
 

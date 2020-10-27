@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 dotenv.config();
 mongoose.connect(
   process.env.DB_CONNECT,
-  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
+  {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false},
   () => console.log("Connected to DB")
 );
 const User = require("../../models/user");
@@ -22,18 +22,18 @@ const {
 
 bcrypt.genSalt(saltRounds, function (error, salt) {
   if (error) {
-    console.log({ success: false, error });
+    console.log({success: false, error});
   } else {
     bcrypt.hash(ADMIN_PASSWORD, salt, function (error, hash) {
       if (error) {
-        console.log({ success: false, error });
+        console.log({success: false, error});
       } else {
-        User.findOne({ email: ADMIN_EMAIL }).then(async (foundUser) => {
+        User.findOne({email: ADMIN_EMAIL}).then(async (foundUser) => {
           if (foundUser) {
             try {
               await User.findByIdAndDelete(foundUser._id);
             } catch (error) {
-              console.log({ success: false, error });
+              console.log({success: false, error});
             }
           }
           const user = new User({
@@ -50,9 +50,9 @@ bcrypt.genSalt(saltRounds, function (error, salt) {
           });
           user.save(function (error, createdUser) {
             if (error) {
-              console.log({ success: false, error });
+              console.log({success: false, error});
             } else {
-              console.log({ success: true, createdUser });
+              console.log({success: true, createdUser});
             }
             process.exit();
           });

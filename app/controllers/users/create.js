@@ -1,9 +1,11 @@
 const User = require("../../models/user");
 const validator = require("email-validator");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 const saltRounds = Number(process.env.SALT_ROUNDS);
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
-const addUser = (req, res) => {
+const create = async (req, res) => {
   const {
     firstname,
     lastname,
@@ -13,7 +15,6 @@ const addUser = (req, res) => {
     telephone,
     organisation,
   } = req.body;
-  const role = "user";
   if (
     !firstname ||
     !lastname ||
@@ -37,7 +38,7 @@ const addUser = (req, res) => {
   } else {
     bcrypt.genSalt(saltRounds, function (erreur, salt) {
       if (erreur) {
-        res.json({ err: erreur });
+        res.json({err: erreur});
       } else {
         bcrypt.hash(password, salt, function (error, hash) {
           const user = new User({
@@ -52,21 +53,22 @@ const addUser = (req, res) => {
             photoLocation: null,
             role: "user",
           });
-          var dataArray = [];
-          User.find({ email: email }, function (err, foundData) {
-            dataArray.push(foundData);
+          User.find({email: email}, function (err, foundData) {
             if (foundData.length > 0) {
               res.status(400).json({
                 message: "This account with email: " + email + " exist",
               });
             } else {
-              user.save(function (error, savedUser) {
+              user.save(function (error, createdUser) {
                 if (error) {
-                  res.status(400).json({ success: false, error });
+                  res.status(400).json({success: false, error});
                 } else {
+                  const token = jwt.sign({_id: createdUser._id, password, role: createdUser.role}, TOKEN_SECRET);
                   res.json({
-                    user: user,
-                    success: "Success !",
+                    success: true,
+                    createdUser,
+                    token,
+                    message: 'Successfully registered!'
                   });
                 }
               });
@@ -78,4 +80,4 @@ const addUser = (req, res) => {
   }
 };
 
-module.exports = addUser;
+module.exports = create;

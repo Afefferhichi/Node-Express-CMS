@@ -24,14 +24,13 @@ const unApplyLikes = (likes, user_id) => {
   return newLikes;
 };
 
-const like = (req, res) => {
+const like = async (req, res) => {
   try {
     Post.findById(req.params.id)
       .then((post) => {
         if (post) {
           if (
-            String(post.author) === req.user._id ||
-            req.user.role === "admin"
+            String(post.author) === req.user._id
           ) {
             res.status(200).json({
               success: false,
@@ -55,7 +54,7 @@ const like = (req, res) => {
             }
 
             post.save((error, savedPost) => {
-              if (error) res.status(400).json({ success: false, error });
+              if (error) res.status(400).json({success: false, error});
               else
                 res.json({
                   success: true,
@@ -65,12 +64,12 @@ const like = (req, res) => {
             });
           }
         } else {
-          res.status(400).json({ success: false });
+          res.status(400).json({success: false});
         }
       })
-      .catch((error) => res.status(400).json({ success: false, error }));
+      .catch((error) => res.status(400).json({success: false, error}));
   } catch (error) {
-    res.status(400).json({ success: false, error });
+    res.status(400).json({success: false, error});
   }
 };
 

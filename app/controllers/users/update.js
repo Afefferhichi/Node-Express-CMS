@@ -6,29 +6,29 @@ const jwt = require("jsonwebtoken");
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 const updateEmail = async (req, res) => {
-  const { currentEmail, newEmail } = req.body;
+  const {currentEmail, newEmail} = req.body;
 
   if (newEmail === currentEmail) {
     res.status(400).json({
-      error: { code: "INVALID_EMAIL", message: "Invalid email" },
+      error: {code: "INVALID_EMAIL", message: "Invalid same email"},
     });
   } else {
     try {
       const user = await User.findById(req.user._id);
       if (user.email !== currentEmail) {
         res.status(400).json({
-          error: { code: "INVALID_EMAIL", message: "Invalid email" },
+          error: {code: "INVALID_EMAIL", message: "Invalid email", currentEmail, newEmail, userEmail: user.email},
         });
       } else {
-        const existingEmail = (await User.count({ email: newEmail })) > 0;
+        const existingEmail = (await User.count({email: newEmail})) > 0;
         if (existingEmail) {
           res.status(400).json({
-            error: { code: "EXISTING_EMAIL", message: "Existing email" },
+            error: {code: "EXISTING_EMAIL", message: "Existing email", newEmail},
           });
         } else {
           user.email = newEmail;
           user.save((error, updatedUser) => {
-            if (error) res.status(400).json({ error });
+            if (error) res.status(400).json({error});
             else
               res.json({
                 success: true,
@@ -50,24 +50,24 @@ const updateEmail = async (req, res) => {
 };
 
 const updatePassword = async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
+  const {currentPassword, newPassword} = req.body;
 
   if (currentPassword === newPassword) {
     res.status(400).json({
-      error: { code: "INVALID_PASSWORD", message: "Same password" },
+      error: {code: "INVALID_PASSWORD", message: "Same password"},
     });
   } else {
     try {
       const user = await User.findById(req.user._id);
       if (!user) {
         res.status(400).json({
-          error: { code: "INVALID_USER", message: "Invalid user" },
+          error: {code: "INVALID_USER", message: "Invalid user"},
         });
       } else {
         const isMatch = await bcrypt.compare(currentPassword, user.password);
         if (!isMatch) {
           res.status(400).json({
-            error: { code: "INVALID_PASSWORD", message: "Invalid password" },
+            error: {code: "INVALID_PASSWORD", message: "Invalid password"},
           });
         } else {
           const salt = await bcrypt.genSalt(saltRounds);
@@ -75,10 +75,10 @@ const updatePassword = async (req, res) => {
           user.password = newPasswordHash;
           const savedUser = await user.save();
           const token = jwt.sign(
-            { _id: savedUser._id, password: newPassword, role: savedUser.role },
+            {_id: savedUser._id, password: savedUser.password, role: savedUser.role},
             TOKEN_SECRET
           );
-          res.json({ success: true, token });
+          res.json({success: true, token});
         }
       }
     } catch (error) {
@@ -108,7 +108,7 @@ const updateAvatar = async (req, res) => {
       user.photo = null;
     }
     const updatedUser = await user.save();
-    res.json({ success: true, updatedUser });
+    res.json({success: true, updatedUser});
   } catch (error) {
     res.status(400).json({
       error: {
@@ -121,26 +121,38 @@ const updateAvatar = async (req, res) => {
 };
 
 const updatePasswordByAdmin = async (req, res) => {
-  if (req.user.role === "admin") {
-    const user = await User.findById(req.params.id);
-    const { newPassword } = req.body;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const newPasswordHash = await bcrypt.hash(newPassword, salt);
-    user.password = newPasswordHash;
-    const savedUser = await user.save();
-    res.json({ success: true, savedUser });
-  } else {
+  try {
+    if (req.user.role === "admin") {
+      const user_id = req.params.id;
+      let user;
+      if(user_id.indexOf('@') > 1) {
+        user = await User.findOne({email: req.params.id});
+      } else {
+        user = await User.findById(req.params.id);
+      }
+      const {newPassword} = req.body;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const newPasswordHash = await bcrypt.hash(newPassword, salt);
+      user.password = newPasswordHash;
+      const updatedUser = await user.save();
+      res.json({success: true, updatedUser});
+    } else {
+      res.status(400).json({
+        error: {
+          code: "ACCESS_DENIED",
+          message: "Access denied",
+        },
+      });
+    }
+  } catch (error) {
     res.status(400).json({
-      error: {
-        code: "ACCESS_DENIED",
-        message: "Access denied",
-      },
+      error
     });
   }
 };
 
-const updateUser = (req, res) => {
-  const { mode } = req.body;
+const update = async (req, res) => {
+  const {mode} = req.body;
   switch (mode) {
     case "updateEmail":
       updateEmail(req, res);
@@ -165,4 +177,4 @@ const updateUser = (req, res) => {
   }
 };
 
-module.exports = updateUser;
+module.exports = update;

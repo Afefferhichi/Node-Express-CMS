@@ -1,4 +1,4 @@
-const { uploader } = require("../libs/uploader");
+const {uploader} = require("../middlewares/uploader");
 
 const restify = (resource, args1, args2) => {
   let router, middleware;
@@ -11,9 +11,9 @@ const restify = (resource, args1, args2) => {
     middleware = args2;
   }
 
-  const { name, list, create, show, update } = resource;
+  const {name, list, create, show, update} = resource;
   const api = "/" + name;
-  const self_name = name.substr(name.lastIndexOf('/')+1);
+  const self_name = name.substr(name.lastIndexOf('/') + 1);
   const self_api = "/" + self_name;
 
   router

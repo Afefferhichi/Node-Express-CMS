@@ -8,19 +8,19 @@ const setVisibleComment = (req, res) => {
         foundComment.visible = setVisibledMethod === "visible";
         foundComment.save((error, updatedComment) => {
           if (error) {
-            res.status(400).json({ error });
+            res.status(400).json({error});
           } else {
             if (updatedComment) {
-              res.json({ success: true, updatedComment });
+              res.json({success: true, updatedComment});
             } else {
-              res.json({ success: false, error_code: "NO_EXIST" });
+              res.json({success: false, error_code: "NO_EXIST"});
             }
           }
         });
       }
     });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({error});
   }
 };
 

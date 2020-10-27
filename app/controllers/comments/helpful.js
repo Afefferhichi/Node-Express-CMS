@@ -24,7 +24,7 @@ const unApplyHelpfuls = (helpfuls, user_id) => {
   return newHelpfuls;
 };
 
-const helpful = (req, res) => {
+const helpful = async (req, res) => {
   try {
     Comment.findById(req.params.id)
       .then((comment) => {
@@ -66,7 +66,7 @@ const helpful = (req, res) => {
             }
 
             comment.save((error, savedComment) => {
-              if (error) res.status(400).json({ success: false, error });
+              if (error) res.status(400).json({success: false, error});
               else
                 res.json({
                   success: true,
@@ -76,12 +76,12 @@ const helpful = (req, res) => {
             });
           }
         } else {
-          res.status(400).json({ success: false });
+          res.status(400).json({success: false});
         }
       })
-      .catch((error) => res.status(400).json({ success: false, error }));
+      .catch((error) => res.status(400).json({success: false, error}));
   } catch (error) {
-    res.status(400).json({ success: false, error });
+    res.status(400).json({success: false, error});
   }
 };
 

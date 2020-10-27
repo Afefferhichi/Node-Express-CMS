@@ -36,7 +36,7 @@ const create = async (req, res) => {
     try {
       post.save(async (error, createdPost) => {
         if (error) {
-          res.json({ error });
+          res.json({error});
         } else {
           if (req.files && req.files.length > 0) {
             try {
@@ -48,7 +48,7 @@ const create = async (req, res) => {
               );
               await post.save();
             } catch (error) {
-              res.status(400).json({ success: false, error });
+              res.status(400).json({success: false, error});
             }
           }
           res.json({
@@ -58,7 +58,7 @@ const create = async (req, res) => {
         }
       });
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({error});
     }
   }
 };

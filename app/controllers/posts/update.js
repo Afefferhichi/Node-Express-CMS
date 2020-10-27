@@ -57,7 +57,7 @@ const update = (req, res) => {
               try {
                 if (req.files && req.files.length > 0) {
                   await Attachment.find({
-                    _id: { $in: post.attachments },
+                    _id: {$in: post.attachments},
                   }).then((attachments) =>
                     attachments.map((attachment) => attachment.remove())
                   );
@@ -69,26 +69,26 @@ const update = (req, res) => {
                   );
                 }
                 post.save(async (error, updatedPost) => {
-                  if (error) res.status(400).json({ success: false, error });
+                  if (error) res.status(400).json({success: false, error});
                   else {
                     updatedPost.attachments = await Attachment.find({
-                      _id: { $in: updatedPost.attachments },
+                      _id: {$in: updatedPost.attachments},
                     });
                     updatedPost.author = await User.findById(req.user._id);
-                    res.json({ success: true, updatedPost });
+                    res.json({success: true, updatedPost});
                   }
                 });
               } catch (error) {
-                res.status(400).json({ success: false, error });
+                res.status(400).json({success: false, error});
               }
             }
           } else {
-            res.status(400).json({ success: false });
+            res.status(400).json({success: false});
           }
         })
-        .catch((error) => res.status(400).json({ success: false, error }));
+        .catch((error) => res.status(400).json({success: false, error}));
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      res.status(400).json({success: false, error});
     }
   }
 };

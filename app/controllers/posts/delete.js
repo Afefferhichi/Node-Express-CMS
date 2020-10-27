@@ -16,17 +16,17 @@ const deletePost = (req, res) => {
         } else {
           try {
             post.remove();
-            res.json({ success: true, deletedPost: post });
+            res.json({success: true, deletedPost: post});
           } catch (error) {
-            res.status(400).json({ error });
+            res.status(400).json({error});
           }
         }
       } else {
-        res.json({ success: false, error_code: "NO_EXIST" });
+        res.json({success: false, error_code: "NO_EXIST"});
       }
     });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({error});
   }
 };
 

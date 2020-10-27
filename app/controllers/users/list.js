@@ -1,13 +1,17 @@
 const User = require("../../models/user");
-const allUsers = (req, res) => {
+
+const list = (req, res) => {
   try {
     if (req.user.role === "admin") {
-      User.find({ role: { $not: /admin/ } })
+      User.find({role: {$not: /admin/}})
         .then((users) => {
-          res.json(users);
+          res.json({
+            success: true,
+            users
+          });
         })
         .catch((reason) => {
-          res.status(500).json({ message: reason });
+          res.status(500).json({message: reason});
         });
     } else {
       res.status(400).json({
@@ -16,8 +20,10 @@ const allUsers = (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({error});
   }
 };
 
-module.exports = allUsers;
+module.exports = {
+  list
+};

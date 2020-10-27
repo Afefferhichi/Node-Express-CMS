@@ -1,7 +1,7 @@
 const Webpage = require("../../models/webpage");
 
 const create = (req, res) => {
-  const { wbpFollowers, wbpDescription, createdBy, updatedBy } = req.body;
+  const {wbpFollowers, wbpDescription, createdBy, updatedBy} = req.body;
   if (!wbpDescription) {
     res.json({
       error: "All fields are mandatory !",
@@ -16,7 +16,7 @@ const create = (req, res) => {
     try {
       webpage.save((error, createdWebpage) => {
         if (error) {
-          res.json({ error });
+          res.json({error});
         } else {
           res.json({
             createdWebpage,
@@ -25,7 +25,7 @@ const create = (req, res) => {
         }
       });
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({error});
     }
   }
 };

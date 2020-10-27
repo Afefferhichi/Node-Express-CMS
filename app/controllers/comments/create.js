@@ -32,13 +32,13 @@ const create = (req, res) => {
         try {
           comment.save(async (error, createdComment) => {
             if (error) {
-              res.json({ error });
+              res.json({error});
             } else {
               try {
                 post.comments = post.comments.concat(createdComment._id);
                 post.save(async (error) => {
                   if (error) {
-                    res.json({ error });
+                    res.json({error});
                   } else {
                     let comment2;
                     if (req.files && req.files.length > 0) {
@@ -51,7 +51,7 @@ const create = (req, res) => {
                         );
                         comment2 = await comment.save();
                       } catch (error) {
-                        res.status(400).json({ success: false, error });
+                        res.status(400).json({success: false, error});
                       }
                     }
                     res.json({
@@ -61,15 +61,15 @@ const create = (req, res) => {
                   }
                 });
               } catch (error) {
-                res.status(400).json({ error });
+                res.status(400).json({error});
               }
             }
           });
         } catch (error) {
-          res.status(400).json({ error });
+          res.status(400).json({error});
         }
       })
-      .catch((error) => res.status(400).json({ success: false, error }));
+      .catch((error) => res.status(400).json({success: false, error}));
   }
 };
 

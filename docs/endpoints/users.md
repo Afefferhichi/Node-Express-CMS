@@ -54,8 +54,8 @@
 [Users Array]
 ``
 
-#### addUser [POST]
-- uri: '/addUser'  
+#### create [POST]
+- uri: '/create'  
 - params:  
     <pre>
     {
@@ -76,8 +76,8 @@
     }
     </pre>
 
-#### updateUser [POST]
-- uri: '/updateUser/:id'
+#### update [POST]
+- uri: '/update/:id'
 - params:  
     <pre>
     {
