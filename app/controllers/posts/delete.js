@@ -1,11 +1,10 @@
 const Post = require("../../models/post");
-const Comment = require("../../models/comment");
 
 const deletePost = (req, res) => {
   try {
     Post.findById(req.params.id).then((post) => {
       if (post) {
-        if (String(post.author) !== req.user._id) {
+        if (req.user.role !== 'admin' && String(post.author) !== req.user._id) {
           res.status(403).json({
             success: false,
             error: {

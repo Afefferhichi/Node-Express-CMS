@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+const Post = require('./post');
 
 var userSchema = new mongoose.Schema({
   firstname: {
@@ -58,6 +59,13 @@ var userSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-//,{ collection: 'users' });
+
+userSchema.post('remove', async (doc, next) => {
+  await Post
+    .find({author: doc._id})
+    .then((posts) => posts.map(post => post.remove()))
+  next();
+});
+
 
 module.exports = mongoose.model("User", userSchema);
