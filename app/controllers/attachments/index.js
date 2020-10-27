@@ -1,5 +1,6 @@
-const {show} = require('./read');
+const {show, list} = require('./read');
 
 module.exports = {
-    show,
+  show,
+  list,
 }

@@ -1,36 +1,45 @@
 const bootstrap = () => {
-    const express = require('express');
-    const bodyParser = require('body-parser');
-    const app = express();
-    const dotenv = require('dotenv');
-    var mongoose = require('mongoose');
-    let cors = require('cors');
-    const host = process.env.HOST || 'localhost';
-    const port = process.env.PORT || 5000;
+  const fs = require('fs');
+  const express = require('express');
+  const bodyParser = require('body-parser');
+  const app = express();
+  const https = require('https');
+  const dotenv = require('dotenv');
+  const mongoose = require('mongoose');
+  let cors = require('cors');
+  const host = process.env.HOST || 'localhost';
+  const port = process.env.PORT || 5000;
+  const key = fs.readFileSync('./key.pem');
+  const cert = fs.readFileSync('./cert.pem');
 
-    dotenv.config();
-    var apiRouter = require('./routes');
+  const server = https.createServer({key: key, cert: cert}, app);
 
-    var corsOptions = {
-        origin: '*',
-        optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-    }
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json());
-    app.use(cors(corsOptions));
+  dotenv.config();
+  const apiRouter = require('./routes');
 
-    //route middelwares
-    app.use('/api/v1', apiRouter);
+  const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+  app.use(bodyParser.urlencoded({extended: true}))
+  app.use(bodyParser.json());
+  app.use(cors(corsOptions));
 
-    //Connect to DB
-    mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
-        () => console.log('Connected to DB')
-    )
+  app.use('/static', express.static('public'));
 
 
-    app.listen(port, host, function () {
-        console.log('listening on ', host, port)
-    })
+  //route middelwares
+  app.use('/api/v1', apiRouter);
+
+  //Connect to DB
+  mongoose.connect(process.env.DB_CONNECT, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false},
+    () => console.log('Connected to DB')
+  )
+
+
+  server.listen(Number(port), host, function () {
+    console.log('listening on ', host, port)
+  })
 };
 
 module.exports = bootstrap;
