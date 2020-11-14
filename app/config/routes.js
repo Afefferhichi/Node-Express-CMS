@@ -33,7 +33,7 @@ router.get("/templates/:id/disable", auth, templates.setEnabled);
 router.get("/templates/:id/:user_id/make-in-use", auth, templates.makeInUse);
 router.get("/templates/:id/:user_id/make-un-use", auth, templates.makeInUse);
 
-// Webpages part
+// WebPages part
 restify(webpages, router, auth);
 
 // Posts part

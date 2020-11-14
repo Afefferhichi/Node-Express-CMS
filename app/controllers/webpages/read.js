@@ -1,9 +1,9 @@
-const Webpage = require('../../models/webpage');
+const WebPage = require('../../models/webpage');
 
 const list = (req, res) => {
   try {
     const condition = req.query;
-    Webpage.find(condition)
+    WebPage.find(condition)
       .then(webpages => {
         res.json({
           success: true,
@@ -21,7 +21,7 @@ const list = (req, res) => {
 
 const show = (req, res) => {
   try {
-    Webpage.findById(req.params.id)
+    WebPage.findById(req.params.id)
       .then(webpage => {
         res.json({
           success: true,

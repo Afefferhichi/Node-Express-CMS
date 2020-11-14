@@ -1,10 +1,17 @@
 const mongoose = require('mongoose');
 
 const webpageSchema = new mongoose.Schema({
-  wbpFollowers: {
-    type: String,
+  followers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  design: {
+    type: String
   },
-  wbpDescription: {
+  html: {
+    type: String
+  },
+  description: {
     type: String,
     required: true
   },
@@ -27,4 +34,4 @@ const webpageSchema = new mongoose.Schema({
 });
 //,{ collection: 'webpages' });
 
-module.exports = mongoose.model('Webpage', webpageSchema);
+module.exports = mongoose.model('WebPage', webpageSchema);

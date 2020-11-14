@@ -1,12 +1,12 @@
-const Webpage = require('../../models/webpage');
+const WebPage = require('../../models/webpage');
 
-const deleteWebpage = (req, res) => {
+const deleteWebPage = (req, res) => {
   try {
-    Webpage
+    WebPage
       .findByIdAndDelete(req.params.id)
-      .then((deletedWebpage) => {
-        if (deletedWebpage) {
-          res.json({success: true, deletedWebpage})
+      .then((deletedWebPage) => {
+        if (deletedWebPage) {
+          res.json({success: true, deletedWebPage})
         } else {
           res.json({success: false, error_code: 'NO_EXIST'})
         }
@@ -16,4 +16,4 @@ const deleteWebpage = (req, res) => {
   }
 };
 
-module.exports = deleteWebpage;
+module.exports = deleteWebPage;
