@@ -37,10 +37,11 @@ router.get("/templates/:id/:user_id/make-un-use", auth, templates.makeInUse);
 restify(webpages, router, auth);
 
 // Posts part
-restify(posts, router, auth);
+router.get("/posts/search", auth, posts.search);
 router.get("/posts/:id/like", auth, posts.like);
 router.get("/posts/:id/dislike", auth, posts.like);
 router.put("/admin/posts/:id/:visibleMethod", authAdmin, posts.setVisible);
+restify(posts, router, auth);
 
 // Comments part
 nested_from({name: "posts", id: "post_id"})(restify, comments, router, auth);

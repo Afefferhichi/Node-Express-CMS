@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Comment = require('./comment');
 const Attachment = require('./attachment');
+const mongoosastic = require('mongoosastic');
 
 const postSchema = new mongoose.Schema({
   author: {
@@ -8,8 +9,8 @@ const postSchema = new mongoose.Schema({
     ref: "User"
   },
   pstOrder: {type: String},
-  pstTitle: {type: String, required: true},
-  pstContent: {type: String, required: true},
+  pstTitle: {type: String, required: true, es_indexed: true},
+  pstContent: {type: String, required: true, es_indexed: true},
   pstLikes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
@@ -34,6 +35,8 @@ const postSchema = new mongoose.Schema({
   }]
 });
 
+postSchema.plugin(mongoosastic);
+
 postSchema.post('remove', async (doc, next) => {
   await Comment
     .find({_id: {$in: doc.comments}})
@@ -41,6 +44,22 @@ postSchema.post('remove', async (doc, next) => {
   await Attachment
     .find({_id: {$in: doc.attachments}})
     .then(attachments => attachments.map(attachment => attachment.remove()))
+  doc.on('es-removed', function(err, res) {
+    if (err) throw err;
+    /* Docuemnt is unindexed */
+  });
+  doc.on('es-indexed', function(err, res){
+    if (err) throw err;
+    /* Document is indexed */
+  });
+  next();
+});
+
+postSchema.post('save', async (doc, next) => {
+  doc.on('es-indexed', function(err, res){
+    if (err) throw err;
+    /* Document is indexed */
+  });
   next();
 });
 

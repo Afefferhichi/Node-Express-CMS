@@ -4,6 +4,7 @@ const {list, show} = require("./read");
 const update = require("./update");
 const like = require("./like");
 const setVisible = require("./setVisible");
+const search = require("./search");
 
 module.exports = {
   name: "posts",
@@ -14,4 +15,5 @@ module.exports = {
   update,
   like,
   setVisible,
+  search,
 };
