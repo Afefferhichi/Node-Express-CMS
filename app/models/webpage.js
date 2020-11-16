@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Post = require('./post');
 
 const webpageSchema = new mongoose.Schema({
   followers: [{
@@ -11,10 +12,18 @@ const webpageSchema = new mongoose.Schema({
   html: {
     type: String
   },
-  description: {
+  name: {
     type: String,
     required: true
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
   createdAt: {
     type: Date,
     default: Date.now
@@ -33,5 +42,17 @@ const webpageSchema = new mongoose.Schema({
   },
 });
 //,{ collection: 'webpages' });
+
+webpageSchema.post('remove', async (doc, next) => {
+  try {
+    const posts = await Post.find({_id: {$in: doc.posts}});
+    for (let k = 0; k < posts.length; k++) {
+      await posts[k].remove();
+    }
+    next();
+  } catch (e) {
+    next();
+  }
+});
 
 module.exports = mongoose.model('WebPage', webpageSchema);

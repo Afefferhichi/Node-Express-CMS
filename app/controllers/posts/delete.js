@@ -1,8 +1,9 @@
 const Post = require("../../models/post");
+const WebPage = require("../../models/webpage");
 
 const deletePost = (req, res) => {
   try {
-    Post.findById(req.params.id).then((post) => {
+    Post.findById(req.params.id).then(async (post) => {
       if (post) {
         if (req.user.role !== 'admin' && String(post.author) !== req.user._id) {
           res.status(403).json({
@@ -14,10 +15,22 @@ const deletePost = (req, res) => {
           });
         } else {
           try {
-            post.remove();
+            if (post.webpage) {
+              const webpage = await WebPage.findById(post.webpage);
+              if (webpage) {
+                const postsArray = [...webpage.posts || []];
+                const existingIndex = postsArray.indexOf(post._id);
+                if (existingIndex > -1) {
+                  postsArray.splice(existingIndex, 1);
+                  webpage.posts = postsArray;
+                  await webpage.save();
+                }
+              }
+            }
+            await post.remove();
             res.json({success: true, deletedPost: post});
           } catch (error) {
-            res.status(400).json({error});
+            res.status(400).json({caught1: true, error});
           }
         }
       } else {
@@ -25,7 +38,7 @@ const deletePost = (req, res) => {
       }
     });
   } catch (error) {
-    res.status(400).json({error});
+    res.status(400).json({caught2: true, error});
   }
 };
 

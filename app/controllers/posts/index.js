@@ -5,6 +5,7 @@ const update = require("./update");
 const like = require("./like");
 const setVisible = require("./setVisible");
 const search = require("./search");
+const synchronize = require("./synchronize");
 
 module.exports = {
   name: "posts",
@@ -16,4 +17,5 @@ module.exports = {
   like,
   setVisible,
   search,
+  synchronize,
 };

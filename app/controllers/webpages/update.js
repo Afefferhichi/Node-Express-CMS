@@ -2,12 +2,12 @@ const WebPage = require('../../models/webpage');
 
 const update = (req, res) => {
   const {
-    description,
+    name,
     design,
     html,
   } = req.body;
   if (
-    !description
+    !name
   ) {
     res.json({
       error: 'All fields are mandatory !'
@@ -17,7 +17,7 @@ const update = (req, res) => {
       WebPage
         .findById(req.params.id)
         .then((webPage) => {
-          webPage.description = description;
+          webPage.name = name;
           webPage.design = design;
           webPage.html = html;
           webPage.updatedAt = new Date();

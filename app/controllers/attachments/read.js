@@ -28,13 +28,16 @@ const show = (req, res) => {
           res.download(attachment.path, attachment.originalname);
           res.status(200);
         } catch (error) {
+          console.log('error on attachment', error);
           res.json({error})
         }
       })
       .catch(error => {
+        console.log('error on attachment', error);
         res.json({error})
       });
   } catch (error) {
+    console.log('error on attachment2', error);
     res.status(400).json({error});
   }
 };

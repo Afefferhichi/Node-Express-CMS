@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Comment = require('./comment');
 const Attachment = require('./attachment');
+const WebPage = require('./webpage');
 const mongoosastic = require('mongoosastic');
 
 const postSchema = new mongoose.Schema({
@@ -25,6 +26,10 @@ const postSchema = new mongoose.Schema({
   }],
   pstRate: {type: String},
   visible: {type: Boolean, default: true,},
+  webpage: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'WebPage'
+  },
   createdAt: {type: Date, default: Date.new},
   updatedAt: {type: Date, default: Date.new},
   createdBy: {type: String},
@@ -44,23 +49,49 @@ postSchema.post('remove', async (doc, next) => {
   await Attachment
     .find({_id: {$in: doc.attachments}})
     .then(attachments => attachments.map(attachment => attachment.remove()))
-  doc.on('es-removed', function(err, res) {
+  doc.on('es-removed', function (err, res) {
     if (err) throw err;
-    /* Docuemnt is unindexed */
-  });
-  doc.on('es-indexed', function(err, res){
-    if (err) throw err;
-    /* Document is indexed */
   });
   next();
 });
 
 postSchema.post('save', async (doc, next) => {
-  doc.on('es-indexed', function(err, res){
+  doc.on('es-indexed', function (err, res) {
     if (err) throw err;
     /* Document is indexed */
   });
   next();
 });
 
-module.exports = mongoose.model('Post', postSchema);
+
+const Post = mongoose.model('Post', postSchema);
+Post.searchWebPageByQuery = (query, cb) => Post.search(
+  {
+    query_string: {
+      query
+    }
+  },
+  {
+    hydrate: true
+  },
+  async (error, posts) => {
+    try {
+      if (error) {
+        cb(error);
+      } else {
+        const webpage_ids =
+          posts.hits.hits
+            .map(post => post && post.webpage)
+            .filter(webpage_id => webpage_id);
+        const webpages = await WebPage
+          .find({_id: {$in: webpage_ids}})
+          .populate('author');
+        cb(null, webpages);
+      }
+    } catch (error) {
+      cb(error);
+    }
+  }
+);
+
+module.exports = Post;

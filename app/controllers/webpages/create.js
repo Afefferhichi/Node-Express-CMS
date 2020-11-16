@@ -2,16 +2,17 @@ const WebPage = require("../../models/webpage");
 
 const create = (req, res) => {
   const {
-    description, design, html } = req.body;
-  if (!description) {
+    name, design, html } = req.body;
+  if (!name) {
     res.json({
       error: "All fields are mandatory !",
     });
   } else {
     const webpage = new WebPage({
-      description,
+      name,
       design,
       html,
+      author: req.user._id,
       createdAt: new Date(),
       updatedAt: new Date(),
       createdBy: req.user._id,
