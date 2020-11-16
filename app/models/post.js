@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Comment = require('./comment');
 const Attachment = require('./attachment');
-const WebPage = require('./webpage');
 const mongoosastic = require('mongoosastic');
 
 const postSchema = new mongoose.Schema({
@@ -64,34 +63,4 @@ postSchema.post('save', async (doc, next) => {
 });
 
 
-const Post = mongoose.model('Post', postSchema);
-Post.searchWebPageByQuery = (query, cb) => Post.search(
-  {
-    query_string: {
-      query
-    }
-  },
-  {
-    hydrate: true
-  },
-  async (error, posts) => {
-    try {
-      if (error) {
-        cb(error);
-      } else {
-        const webpage_ids =
-          posts.hits.hits
-            .map(post => post && post.webpage)
-            .filter(webpage_id => webpage_id);
-        const webpages = await WebPage
-          .find({_id: {$in: webpage_ids}})
-          .populate('author');
-        cb(null, webpages);
-      }
-    } catch (error) {
-      cb(error);
-    }
-  }
-);
-
-module.exports = Post;
+module.exports = mongoose.model('Post', postSchema);

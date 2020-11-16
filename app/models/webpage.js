@@ -51,6 +51,7 @@ webpageSchema.post('remove', async (doc, next) => {
     }
     next();
   } catch (e) {
+    console.log('error on remove webpage', e);
     next();
   }
 });
