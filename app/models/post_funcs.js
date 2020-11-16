@@ -1,4 +1,5 @@
 const Post = require('./post');
+const WebPage = require('./webpage');
 searchWebPageByQuery = (query, cb) => Post.search(
   {
     query_string: {
