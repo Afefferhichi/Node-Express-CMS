@@ -1,6 +1,6 @@
 const create = require("./create");
 const deletePost = require("./delete");
-const {list, show} = require("./read");
+const {list, show, listInHome} = require("./read");
 const update = require("./update");
 const like = require("./like");
 const setVisible = require("./setVisible");
@@ -18,4 +18,5 @@ module.exports = {
   setVisible,
   search,
   synchronize,
+  listInHome,
 };

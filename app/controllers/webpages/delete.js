@@ -3,15 +3,15 @@ const WebPage = require('../../models/webpage');
 const deleteWebPage = (req, res) => {
   try {
     WebPage.findById(req.params.id)
-      .then(async (deletedWebPage) => {
-        if (!deletedWebPage) {
-          res.json({success: false, error_code: 'NO_EXIST'})
+      .then(async (webpage) => {
+        if (req.user._id !== webpage.author) {
+          res.json({success: false, error_code: 'ACCESS_DENIED'})
         } else {
-          await deletedWebPage.remove();
-          if (deletedWebPage) {
-            res.json({success: true, deletedWebPage})
-          } else {
+          if (!webpage) {
             res.json({success: false, error_code: 'NO_EXIST'})
+          } else {
+            await webpage.remove();
+            res.json({success: true, deletedWebPage: webpage})
           }
         }
       })

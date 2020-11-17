@@ -3,7 +3,9 @@ const WebPage = require('../../models/webpage');
 const list = (req, res) => {
   try {
     const condition = req.query;
+    condition['author'] = req.user._id;
     WebPage.find(condition)
+      .populate('author')
       .then(webpages => {
         res.json({
           success: true,

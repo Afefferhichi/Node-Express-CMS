@@ -35,11 +35,13 @@ router.get("/templates/:id/:user_id/make-un-use", auth, templates.makeInUse);
 
 // WebPages part
 router.post("/webpages/:webpage_id/posts", [auth, uploader.array("attachments")], posts.create);
+router.get("/webpages/:id/:follow_method", auth, webpages.follow);
 restify(webpages, router, auth);
 
 // Posts part
 router.get("/posts/synchronize", auth, posts.synchronize);
 router.get("/posts/search", auth, posts.search);
+router.get("/posts/listInHome", auth, posts.listInHome);
 router.get("/posts/:id/like", auth, posts.like);
 router.get("/posts/:id/dislike", auth, posts.like);
 router.put("/admin/posts/:id/:visibleMethod", authAdmin, posts.setVisible);

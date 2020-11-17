@@ -2,10 +2,10 @@ const Post = require("../../models/post");
 
 const setVisiblePost = async (req, res) => {
   try {
-    const setVisibledMethod = req.params.visibleMethod;
+    const visibleMethod = req.params.visibleMethod;
     Post.findById(req.params.id).then((foundPost) => {
       if (foundPost) {
-        foundPost.visible = setVisibledMethod === "visible";
+        foundPost.visible = visibleMethod === "visible";
         foundPost.save((error, updatedPost) => {
           if (error) {
             res.status(400).json({error});
