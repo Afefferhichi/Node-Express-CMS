@@ -4,7 +4,7 @@ const deleteWebPage = (req, res) => {
   try {
     WebPage.findById(req.params.id)
       .then(async (webpage) => {
-        if (req.user._id !== webpage.author) {
+        if (String(req.user._id) !== String(webpage.author)) {
           res.json({success: false, error_code: 'ACCESS_DENIED'})
         } else {
           if (!webpage) {
