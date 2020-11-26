@@ -3,6 +3,9 @@ const Template = require('../../models/template');
 const list = (req, res) => {
   try {
     const condition = req.query;
+    if (req.user.role !== "admin") {
+      condition['enabled'] = true;
+    }
     Template.find(condition)
       .then(templates => {
         res.json({

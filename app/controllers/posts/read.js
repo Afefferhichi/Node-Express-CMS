@@ -2,17 +2,32 @@ const Post = require("../../models/post");
 const WebPage = require("../../models/webpage");
 const {findByCondition} = require("../../models/post_funcs");
 
+const str2Boolean = str => {
+  return (str === 'true'
+      ? true
+      : str === 'false'
+        ? false
+        : str === 'null'
+          ? null
+          : false
+  );
+};
+
 const list = (req, res) => {
   try {
     const condition = req.query;
     let sortBy = {};
     if (req.user.role === "admin") {
       sortBy = {visible: 1, createdAt: -1};
+      if(condition['visible'] !== undefined) {
+        condition['visible'] = str2Boolean(condition['visible']);
+      }
     } else {
       condition['$or'] = [
         {'author': req.user._id},
         {'visible': true}
       ];
+      sortBy = {visible: 1, createdAt: -1};
     }
     findByCondition(condition, sortBy)
       .then((posts) => {

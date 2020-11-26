@@ -24,7 +24,7 @@ const postSchema = new mongoose.Schema({
     ref: "Attachment"
   }],
   pstRate: {type: String},
-  visible: {type: Boolean, default: false,},
+  visible: {type: Boolean, default: null,},
   webpage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'WebPage'
