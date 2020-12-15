@@ -11,6 +11,7 @@ const webpages = require("../controllers/webpages");
 const posts = require("../controllers/posts");
 const comments = require("../controllers/comments");
 const attachments = require("../controllers/attachments");
+const contact_messages = require("../controllers/contact_messages");
 const {restify, nested_from} = require("../libs/restify");
 
 // Static part
@@ -27,11 +28,12 @@ router.put("/changeUserPassword/:id", authAdmin, users.update);
 router.put("/setUserEnabled/:id/:enableMode", authAdmin, users.setEnabled);
 
 // Templates part
-restify(templates, router, auth);
+router.get('/templates/categories', auth, templates.categories)
 router.get("/templates/:id/enable", auth, templates.setEnabled);
 router.get("/templates/:id/disable", auth, templates.setEnabled);
 router.get("/templates/:id/:user_id/make-in-use", auth, templates.makeInUse);
 router.get("/templates/:id/:user_id/make-un-use", auth, templates.makeInUse);
+restify(templates, router, auth);
 
 // WebPages part
 router.post("/webpages/:webpage_id/posts", [auth, uploader.array("attachments")], posts.create);
@@ -56,6 +58,10 @@ router.put(
   authAdmin,
   comments.setVisible
 );
+
+// Messages part
+router.post("/contact_messages", contact_messages.create);
+restify(contact_messages, router, auth);
 
 // Attachments part
 router.get("/attachments", attachments.list);
