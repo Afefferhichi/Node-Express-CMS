@@ -1,7 +1,8 @@
 const create = require("./create");
 const deleteContactMessage = require("./delete");
-const {list, show} = require("./read");
+const {list, show, getUnSeenAdminMessages} = require("./read");
 const update = require("./update");
+const markAsSeen = require("./markAsSeen");
 
 module.exports = {
   name: "contact_messages",
@@ -9,5 +10,6 @@ module.exports = {
   delete: deleteContactMessage,
   list,
   show,
-  update,
+  getUnSeenAdminMessages,
+  update, markAsSeen,
 };

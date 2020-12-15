@@ -36,7 +36,30 @@ const show = (req, res) => {
   }
 };
 
+
+const getUnSeenAdminMessages = (req, res) => {
+  try {
+    const condition = {
+      seen: false
+    };
+    ContactMessage.find(condition)
+      .then((messages) => {
+        res.json({
+          success: true,
+          messages,
+        });
+      })
+      .catch(error => {
+        res.json({error});
+      });
+  } catch (error) {
+    res.status(400).json({error});
+  }
+};
+
+
 module.exports = {
   list,
   show,
+  getUnSeenAdminMessages
 };

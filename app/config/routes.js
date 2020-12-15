@@ -61,6 +61,8 @@ router.put(
 
 // Messages part
 router.post("/contact_messages", contact_messages.create);
+router.get("/contact_messages/unseen", authAdmin, contact_messages.getUnSeenAdminMessages);
+router.put("/contact_messages/:id/:seenMethod", authAdmin, contact_messages.markAsSeen);
 restify(contact_messages, router, auth);
 
 // Attachments part
