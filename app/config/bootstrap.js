@@ -8,7 +8,7 @@ const bootstrap = () => {
   const mongoose = require('mongoose');
   let cors = require('cors');
   const host = process.env.HOST || 'localhost';
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT || 8000;
   const key = fs.readFileSync('./key.pem');
   const cert = fs.readFileSync('./cert.pem');
 
@@ -27,17 +27,20 @@ const bootstrap = () => {
 
   app.use('/static', express.static('public'));
 
-
+  app.get('/',(req,res)=>{
+  res.send("working");
+  })
   //route middelwares
   app.use('/api/v1', apiRouter);
 
+  console.log(process.env.DB_CONNECT)
   //Connect to DB
   mongoose.connect(process.env.DB_CONNECT, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false},
     () => console.log('Connected to DB')
   )
 
 
-  server.listen(Number(port), host, function () {
+  app.listen(Number(5001), host, function () {
     console.log('listening on ', host, port)
   })
 };

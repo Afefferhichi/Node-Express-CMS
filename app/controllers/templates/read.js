@@ -9,6 +9,8 @@ const list = (req, res) => {
     if(condition['categories']) {
       condition['category'] = {$in: condition['categories'].split(',')};
       condition['categories'] = undefined;
+    }else {
+      delete condition.categories;
     }
     Template.find(condition)
       .then(templates => {
